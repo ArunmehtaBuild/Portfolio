@@ -176,18 +176,32 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
   );
 }
 
-export default function OrbScene({ order }: { order: string[] }) {
+export default function OrbScene({ order, onLost }: { order: string[]; onLost: () => void }) {
   const mobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
     <Canvas
-      shadows
-      dpr={[1, mobile ? 1.5 : 1.75]}
+      shadows={mobile ? false : "percentage"}
+      dpr={[1, mobile ? 1.25 : 1.5]}
       camera={{ fov: 32, position: POSES.origin.camera, near: 0.1, far: 60 }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{ antialias: !mobile, alpha: true, powerPreference: "default", failIfMajorPerformanceCaveat: false }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.05;
+        // react-three-fiber force-loses the context whenever the canvas unmounts (hot reload,
+        // Next's back/forward cache). Chrome counts those losses and eventually blocks WebGL
+        // for the page, so skip the forced loss: the renderer is still disposed, and the
+        // browser frees the context with the canvas.
+        gl.forceContextLoss = () => {};
+        // A real loss (GPU reset, driver issue): switch to the CSS fallback for this visit.
+        gl.domElement.addEventListener(
+          "webglcontextlost",
+          (e) => {
+            e.preventDefault();
+            onLost();
+          },
+          { once: true },
+        );
       }}
     >
       <World order={order} mobile={mobile} />
