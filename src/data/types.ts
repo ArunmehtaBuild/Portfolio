@@ -51,6 +51,14 @@ export interface Region {
   title: string;
   /** A one-line restatement of the problem, set large. No new claims. */
   statement: string;
+  /** One sentence for the project card on the home page. */
+  summary: string;
+  /** Arun's role in a few words, shown on the card. */
+  role: string;
+  /** "current": still being built. "featured": finished main project. */
+  status: "current" | "featured";
+  /** Short badge on the card, e.g. the event or award. */
+  badge: string;
   tone: Tone;
   project: string;
   context: string;
@@ -65,7 +73,8 @@ export interface Region {
   myWork: WorkItem[];
   /** Short first-person asides after the work cards. */
   notes?: Rich[];
-  status?: Rich;
+  /** Where the project stands now, in a sentence. */
+  progress?: Rich;
   evidence: Link[];
   /** Backs Arun's personal contribution. */
   contributionSource: Source;
