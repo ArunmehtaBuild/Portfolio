@@ -2,15 +2,36 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import type { Stop } from "@/data/atlas";
+import { OrbFallback } from "./OrbFallback";
+import { SceneBoundary } from "./SceneBoundary";
 
 // The 3D scene loads in the browser only, after the page, so it never blocks first paint.
 const OrbScene = dynamic(() => import("./OrbScene"), { ssr: false });
 
+// Checked once per visit: can this browser create a WebGL context at all? If WebGL is
+// disabled or blocked we never mount the canvas, so three.js doesn't log errors either.
+let webgl: boolean | undefined;
+function webglAvailable() {
+  if (webgl === undefined) {
+    try {
+      const probe = document.createElement("canvas");
+      webgl = !!(probe.getContext("webgl2") ?? probe.getContext("webgl"));
+    } catch {
+      webgl = false;
+    }
+  }
+  return webgl;
+}
+const noSubscribe = () => () => {};
+
 // Fixed, full-screen 3D layer behind every section. Purely decorative.
 export function Backdrop({ stops }: { stops: Stop[] }) {
   const order = useMemo(() => stops.map((s) => s.id), [stops]);
+  // WebGL can be missing or blocked; then a CSS sphere stands in so the page never breaks.
+  const [lost, setLost] = useState(false);
+  const supported = useSyncExternalStore(noSubscribe, webglAvailable, () => true);
   // The dotted grid belongs to the hero: it sits behind the sphere and fades as you leave.
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 700], [1, 0]);
@@ -23,7 +44,13 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
       transition={{ duration: 1.6, delay: 0.2, ease: "easeOut" }}
     >
       <motion.div style={{ opacity: gridOpacity }} className="dot-grid absolute inset-0" />
-      <OrbScene order={order} />
+      {lost || !supported ? (
+        <OrbFallback />
+      ) : (
+        <SceneBoundary fallback={<OrbFallback />}>
+          <OrbScene order={order} onLost={() => setLost(true)} />
+        </SceneBoundary>
+      )}
       {/* Vignette so text over the scene always has contrast */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_30%,rgba(5,8,11,0.65)_80%)]" />
     </motion.div>
