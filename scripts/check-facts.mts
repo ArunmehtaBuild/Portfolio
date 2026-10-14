@@ -8,7 +8,7 @@
 import { createHash } from "node:crypto";
 import { milestones } from "../src/data/milestones.ts";
 import { NEXERA_CHECKED_ON, nexera } from "../src/data/nexera.ts";
-import { offTheMap, profile, unmapped } from "../src/data/profile.ts";
+import { about, offTheMap, profile } from "../src/data/profile.ts";
 import { civicSetu, regions } from "../src/data/regions.ts";
 
 const STATUSES = new Set(["verified", "confirmed", "team-reported"]);
@@ -73,7 +73,7 @@ function requireSources(stats: { source?: unknown }[], path: string): void {
   });
 }
 
-walk({ profile, offTheMap, unmapped }, "profile");
+walk({ profile, about, offTheMap }, "profile");
 walk(nexera, "nexera");
 walk(regions, "regions");
 walk(civicSetu, "civicSetu");
