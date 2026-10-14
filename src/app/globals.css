@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
+/* Problem Atlas tokens. Light is "paper", dark is "night chart". */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #f3eee3;
+  --surface: #fbf8f1;
+  --ink: #1c2629;
+  --muted: #586669;
+  --faint: #8a8676;
+  --line: #d3c9b3;
+  --contour: #c4b89c;
+  --sea: #1d5c78;
+  --sea-soft: #dce8ea;
+  --survey: #a8402c;
+  --focus: #1d5c78;
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --paper: #0e181c;
+    --surface: #132228;
+    --ink: #e9e2d3;
+    --muted: #a3b0ae;
+    --faint: #6f7d7c;
+    --line: #26393f;
+    --contour: #22363c;
+    --sea: #7cbbd4;
+    --sea-soft: #16303a;
+    --survey: #e58a6c;
+    --focus: #7cbbd4;
+    color-scheme: dark;
   }
 }
 
+:root[data-theme="dark"] {
+  --paper: #0e181c;
+  --surface: #132228;
+  --ink: #e9e2d3;
+  --muted: #a3b0ae;
+  --faint: #6f7d7c;
+  --line: #26393f;
+  --contour: #22363c;
+  --sea: #7cbbd4;
+  --sea-soft: #16303a;
+  --survey: #e58a6c;
+  --focus: #7cbbd4;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-contour: var(--contour);
+  --color-sea: var(--sea);
+  --color-sea-soft: var(--sea-soft);
+  --color-survey: var(--survey);
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Code", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--sea);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Small caps label used for bearings, kickers and stat captions. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Links inside prose. */
+.prose-link {
+  color: var(--sea);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* The dashed route that joins regions. */
+.route {
+  background-image: linear-gradient(to bottom, var(--line) 50%, transparent 50%);
+  background-size: 1px 10px;
+  background-repeat: repeat-y;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
