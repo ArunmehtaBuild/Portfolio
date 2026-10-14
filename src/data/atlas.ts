@@ -10,8 +10,9 @@ export interface Stop {
 // Sections of the home page, in order. Projects open in their own panel, so the home
 // page stays short: overview first, depth on demand.
 export const stops: Stop[] = [
-  { id: "origin", label: "Origin", tone: "ink" },
-  { id: "about", label: "About", tone: "ink" },
+  // Light, premium opening; the page cross-fades to dark from Experience onward.
+  { id: "origin", label: "Origin", tone: "ivory" },
+  { id: "about", label: "About", tone: "ivory" },
   { id: "experience", label: "Experience", tone: "ink" },
   { id: "projects", label: "Projects", tone: "ink" },
   { id: "milestones", label: "Milestones", tone: "ink" },

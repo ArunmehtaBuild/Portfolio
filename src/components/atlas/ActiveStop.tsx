@@ -36,7 +36,7 @@ export function ActiveStopProvider({ stops, children }: { stops: Stop[]; childre
   }, [stops]);
 
   useEffect(() => {
-    document.documentElement.dataset.tone = stops.find((s) => s.id === active)?.tone ?? "ink";
+    document.documentElement.dataset.tone = stops.find((s) => s.id === active)?.tone ?? "ivory";
   }, [active, stops]);
 
   const index = Math.max(0, stops.findIndex((s) => s.id === active));
