@@ -12,7 +12,7 @@ export interface Stop {
 export const stops: Stop[] = [
   { id: "origin", label: "Origin", tone: "ink" },
   { id: "about", label: "About", tone: "ink" },
-  { id: "experience", label: "Experience", tone: "sand" },
+  { id: "experience", label: "Experience", tone: "ink" },
   { id: "projects", label: "Projects", tone: "ink" },
   { id: "milestones", label: "Milestones", tone: "ink" },
   { id: "contact", label: "Contact", tone: "ink" },
