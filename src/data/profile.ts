@@ -3,7 +3,7 @@ import type { Link } from "./types";
 export const profile = {
   name: "Arun Mehta",
   /** Chips under the name. */
-  tagline: ["Software Engineer", "Director & COO · Nexera", "B.Tech CSE · GGSIPU ’28"],
+  tagline: ["B.Tech CSE · GGSIPU ’28", "Director & COO · Nexera", "Backend · Systems"],
   /** The hero line. Kept modest: a student who runs things and builds things. */
   headline: "I like understanding how systems work, and then building them.",
   subline: "Backends, APIs and the infrastructure underneath. I study CSE at GGSIPU, and I’m part of the team at Nexera.",
@@ -27,7 +27,6 @@ export const about = {
     { label: "Based in", value: "New Delhi, India" },
     { label: "Currently", value: "Director & COO @ Nexera" },
     { label: "Studying", value: "B.Tech CSE, GGSIPU · 2024–2028" },
-    { label: "Role", value: "Software engineer" },
     { label: "Focus", value: "Backend and system design" },
   ],
   /** The "unmapped region", now one honest line instead of a whole section. */
