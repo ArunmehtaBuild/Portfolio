@@ -54,7 +54,7 @@ export default function RootLayout({ children, modal }: LayoutProps<"/">) {
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important;filter:none!important}`}</style>
         </noscript>
       </head>
       <body className="min-h-screen">

@@ -5,27 +5,32 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Fades and lifts its children into place the first time they scroll into view. */
+/** Fades, de-blurs and lifts its children into place the first time they scroll into view. */
 export function FadeUp({
   children,
   delay = 0,
   className,
   as = "div",
+  immediate = false,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
   as?: "div" | "li" | "p" | "section";
+  /** Animate on mount instead of on scroll (for content already on screen at load). */
+  immediate?: boolean;
 }) {
   const Tag = motion[as];
+  const trigger = immediate
+    ? { animate: { opacity: 1, y: 0, filter: "blur(0px)" } }
+    : { whileInView: { opacity: 1, y: 0, filter: "blur(0px)" }, viewport: { once: true, margin: "0px 0px -12% 0px" } };
   return (
     <Tag
       data-reveal=""
       className={className}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.8, ease: EASE, delay }}
+      initial={{ opacity: 0, y: 36, filter: "blur(10px)" }}
+      {...trigger}
+      transition={{ duration: 1, ease: EASE, delay }}
     >
       {children}
     </Tag>
@@ -33,7 +38,7 @@ export function FadeUp({
 }
 
 /**
- * Splits text into words that rise out of a mask, one after another.
+ * Splits text into words that resolve out of a blur one after another, rising slightly.
  * Screen readers get the plain sentence once.
  */
 export function SplitWords({
@@ -56,12 +61,15 @@ export function SplitWords({
   return (
     <motion.span className={className} initial="hidden" {...trigger} aria-label={text} role="text">
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] align-bottom">
+        <span key={`${word}-${i}`} aria-hidden="true" className="inline-block pb-[0.12em] align-bottom">
           <motion.span
             data-reveal=""
             className="inline-block"
-            variants={{ hidden: { y: "105%" }, shown: { y: "0%" } }}
-            transition={{ duration: 0.9, ease: EASE, delay: delay + i * stagger }}
+            variants={{
+              hidden: { opacity: 0, y: "0.35em", filter: "blur(14px)" },
+              shown: { opacity: 1, y: "0em", filter: "blur(0px)" },
+            }}
+            transition={{ duration: 1.1, ease: EASE, delay: delay + i * stagger * 1.6 }}
           >
             {word}
             {i < words.length - 1 ? " " : ""}
