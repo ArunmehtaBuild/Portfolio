@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { Logo } from "@/components/atlas/Logo";
 import { ProjectDossier } from "@/components/projects/ProjectDossier";
 import { findProject, orderedProjects } from "@/lib/projects";
@@ -21,7 +22,16 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
 }
 
 // Visited directly (shared link or refresh): the same dossier as a full page.
-export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
+// Params are read inside Suspense so client navigations to this page start instantly.
+export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
+  return (
+    <Suspense fallback={null}>
+      <ProjectPageBody params={params} />
+    </Suspense>
+  );
+}
+
+async function ProjectPageBody({ params }: { params: PageProps<"/projects/[slug]">["params"] }) {
   const { slug } = await params;
   const found = findProject(slug);
   if (!found) notFound();
