@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useId } from "react";
 import { VisualFrame } from "./VisualFrame";
 
 // NETWM: one network state per minute, left to right. An attack lights up stage by stage,
@@ -17,16 +18,18 @@ export function AttackTimeline() {
   const x = (c: number) => 28 + c * 36;
   const y = (r: number) => 44 + r * 46;
   const loop = 6;
+  // Unique per instance: the same illustration can be on screen twice (card and panel).
+  const hatch = `${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-hatch`;
 
   return (
-    <VisualFrame fig={3} caption="One state per minute, five ahead">
+    <VisualFrame fig={2} caption="One state per minute, five ahead">
       <svg viewBox="0 0 400 320" className="absolute inset-0 h-full w-full">
         <defs>
-          <pattern id="netwm-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <pattern id={hatch} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <line x1="0" y1="0" x2="0" y2="8" style={{ stroke: "var(--line)" }} strokeWidth="2" />
           </pattern>
         </defs>
-        <rect x={x(6.5)} y="18" width={400 - x(6.5)} height="250" fill="url(#netwm-hatch)" />
+        <rect x={x(6.5)} y="18" width={400 - x(6.5)} height="250" fill={`url(#${hatch})`} />
         <text x={x(6.5) + 8} y="32" className="font-mono" fontSize="8" style={{ fill: "var(--muted)" }}>
           IMAGINED · t+1 … t+5 min
         </text>

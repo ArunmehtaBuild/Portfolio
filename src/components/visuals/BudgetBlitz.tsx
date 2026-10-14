@@ -20,7 +20,7 @@ export function BudgetBlitz() {
   const bucketX = (b: number) => 22 + b * 33.3;
 
   return (
-    <VisualFrame fig={4} caption="Budget Blitz, sorting spend">
+    <VisualFrame fig={3} caption="Budget Blitz, sorting spend">
       <div className="absolute inset-0">
         {ITEMS.map((item, i) => {
           const start = (i / ITEMS.length) * LOOP;

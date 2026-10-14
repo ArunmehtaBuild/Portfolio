@@ -14,7 +14,7 @@ export function PatchDiff() {
   });
 
   return (
-    <VisualFrame fig={5} caption="Finding → fix → pull request">
+    <VisualFrame fig={4} caption="Finding → fix → pull request">
       <div className="absolute inset-0 flex flex-col justify-center gap-1.5 px-5 font-mono text-[0.7rem] leading-[1.7] sm:px-7 sm:text-[0.76rem]">
         <p className="text-muted">
           <span className="mr-3 opacity-50">41</span>def get_user(user_id):

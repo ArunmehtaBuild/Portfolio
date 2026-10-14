@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useId } from "react";
 import { VisualFrame } from "./VisualFrame";
 
 // OKEANOS: a satellite scans the surface while 15 depth layers, warm at the top and cold
@@ -20,11 +21,13 @@ function wave(y: number, amp: number, phase: number) {
 }
 
 export function DepthLayers() {
+  // Unique per instance: the same illustration can be on screen twice (card and panel).
+  const clip = `${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-water`;
   return (
-    <VisualFrame fig={2} caption="15 depths, 0 to 1,000 m">
+    <VisualFrame fig={1} caption="15 depths, 0 to 1,000 m">
       <svg viewBox="0 0 400 320" className="absolute inset-0 h-full w-full">
         <defs>
-          <clipPath id="okeanos-water">
+          <clipPath id={clip}>
             <rect x="0" y="0" width="346" height="320" />
           </clipPath>
         </defs>
@@ -38,7 +41,7 @@ export function DepthLayers() {
         </motion.g>
 
         {/* Layers draw in once (parent variants); each drifts on its own CSS loop. */}
-        <motion.g clipPath="url(#okeanos-water)" initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.3 }}>
+        <motion.g clipPath={`url(#${clip})`} initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.3 }}>
           {DEPTHS.map((depth, i) => {
             const y = 70 + i * 16;
             const t = i / (DEPTHS.length - 1);
