@@ -17,9 +17,13 @@ export function Hero() {
 
       <div className="mx-auto grid min-h-[100svh] max-w-7xl content-center gap-12 px-5 pt-28 pb-14 sm:px-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_27rem]">
         <div className="flex flex-col justify-center">
-          <FadeUp className="label">Region 00 · Origin · New Delhi · 28.61°N 77.21°E</FadeUp>
+          <FadeUp className="label">Portfolio · New Delhi · 28.61°N 77.21°E</FadeUp>
 
-          <h1 id="origin-title" className="mt-6 leading-[0.86]">
+          <p lang="hi" className="mt-8 font-hindi text-[clamp(2.4rem,5vw,3.8rem)] leading-none text-accent">
+            <SplitWords text="नमस्कार" immediate delay={0.05} />
+          </p>
+
+          <h1 id="origin-title" className="mt-3 leading-[0.86]">
             <span className="block font-serif text-[clamp(4.6rem,15vw,11.5rem)] italic tracking-[-0.02em]">
               <SplitWords text="Arun" immediate delay={0.15} />
             </span>

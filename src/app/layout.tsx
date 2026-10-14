@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Instrument_Serif, Yatra_One } from "next/font/google";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -17,6 +17,14 @@ const instrument = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
+});
+
+// Devanagari display face for the "नमस्कार" greeting. Stand-in until the AMS Adiyogi
+// font file is added (see --font-hindi in globals.css, which tries Adiyogi first).
+const yatra = Yatra_One({
+  variable: "--font-yatra",
+  subsets: ["devanagari"],
+  weight: "400",
 });
 
 // IBM Plex Mono: bearings, labels and figures.
@@ -50,7 +58,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${yatra.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>
