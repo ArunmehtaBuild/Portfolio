@@ -3,11 +3,11 @@ import { FadeUp, SplitWords } from "../motion/Reveal";
 import { SectionHead } from "./SectionHead";
 
 // Who Arun is in one screen: a lead line, two short paragraphs, quick facts,
-// what he's looking for next, and what he does away from the keyboard.
+// what's next, and life away from the keyboard.
 export function About() {
   return (
     <section id="about" data-stop="about" aria-labelledby="about-title" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-      <SectionHead index="01" label="About" id="about-title" title="Who I am" />
+      <SectionHead index="01" label="About" id="about-title" accent="Who" title="I am" />
 
       <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
