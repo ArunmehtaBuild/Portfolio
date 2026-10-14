@@ -31,22 +31,27 @@
     --card 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Region tones. Contrast of fg and muted on bg is at least WCAG AA in every tone. */
-:root[data-tone="sand"] {
+/* Tones. Set on <html> they recolour the page; set on an element (a project card, a dossier)
+   they give just that element its palette. fg and muted pass WCAG AA on bg in every tone. */
+[data-tone="ink"] {
+  --bg: #08121a; --fg: #ebe7dd; --muted: #9aa7aa; --line: #1e2d36; --accent: #d6ff5c; --card: #0d1a23;
+  color-scheme: dark;
+}
+[data-tone="sand"] {
   --bg: #eee8da; --fg: #13191c; --muted: #535c5f; --line: #d2c8b2; --accent: #0e5c68; --card: #f7f2e7;
   color-scheme: light;
 }
-:root[data-tone="ocean"] {
+[data-tone="ocean"] {
   --bg: #051b2a; --fg: #e5f2f5; --muted: #93b4bf; --line: #12364a; --accent: #52d8f0; --card: #08263a;
 }
-:root[data-tone="signal"] {
+[data-tone="signal"] {
   --bg: #060e0a; --fg: #e2f1e7; --muted: #8aa594; --line: #142a1d; --accent: #6dff9e; --card: #0a1811;
 }
-:root[data-tone="gold"] {
+[data-tone="gold"] {
   --bg: #f3d35c; --fg: #1a1607; --muted: #4f4415; --line: #d8b73f; --accent: #1a1607; --card: #f7dd78;
   color-scheme: light;
 }
-:root[data-tone="violet"] {
+[data-tone="violet"] {
   --bg: #0e0b1c; --fg: #ece9ff; --muted: #a7a2c8; --line: #241e3f; --accent: #a998ff; --card: #151129;
 }
 
