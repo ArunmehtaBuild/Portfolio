@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -47,7 +48,7 @@ export const viewport: Viewport = {
   themeColor: "#08121a",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} antialiased`} suppressHydrationWarning>
       <head>
@@ -56,7 +57,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
         </noscript>
       </head>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        <SmoothScroll>
+          {children}
+          {modal}
+        </SmoothScroll>
+      </body>
     </html>
   );
 }
