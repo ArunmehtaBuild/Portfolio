@@ -18,7 +18,7 @@ export function Experience() {
 
   return (
     <section id="experience" data-stop="experience" aria-labelledby="experience-title" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-      <SectionHead index="02" label="Experience" id="experience-title" title="Where I work" />
+      <SectionHead index="02" label="Experience" id="experience-title" accent="Where" title="I work" />
 
       <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-16">
         {/* Role card */}
