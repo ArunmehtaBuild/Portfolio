@@ -1,11 +1,11 @@
 import { orderedProjects } from "@/lib/projects";
-import { ProjectCarousel } from "../projects/ProjectCarousel";
+import { ProjectDeck } from "../projects/ProjectDeck";
 import { SectionHead } from "./SectionHead";
 
-// Projects as a carousel: one project at a time, the full story one click away.
+// Projects as a stacked deck: one card per project, the full story one click away.
 export function Projects() {
   return (
-    <ProjectCarousel
+    <ProjectDeck
       projects={orderedProjects}
       header={
         <SectionHead
