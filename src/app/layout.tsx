@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Instrument_Serif, Yatra_One } from "next/font/google";
+import { Archivo, Gajraj_One, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -19,11 +19,11 @@ const instrument = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-// Devanagari display face for the "नमस्कार" greeting. Stand-in until the AMS Adiyogi
-// font file is added (see --font-hindi in globals.css, which tries Adiyogi first).
-const yatra = Yatra_One({
-  variable: "--font-yatra",
-  subsets: ["devanagari"],
+// Gajraj One: heavy Devanagari display face for the gold "नमस्कार !" greeting.
+// (--font-hindi in globals.css tries AMS Adiyogi first, if it is ever added locally.)
+const gajraj = Gajraj_One({
+  variable: "--font-gajraj",
+  subsets: ["devanagari", "latin"],
   weight: "400",
 });
 
@@ -58,7 +58,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${yatra.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${gajraj.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>
