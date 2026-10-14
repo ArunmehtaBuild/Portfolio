@@ -10,7 +10,7 @@ export function Contact() {
 
   return (
     <section id="contact" data-stop="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 sm:px-8 sm:pt-32">
+        <div className="mx-auto max-w-7xl px-5 pt-24 pb-24 sm:px-8 sm:pt-32">
           <p className="label flex items-center gap-3">
             <span className="text-accent">05</span>
             <span className="inline-block h-px w-10 bg-accent" />
@@ -60,10 +60,6 @@ export function Contact() {
           </ul>
         </div>
 
-        {/* Oversized sign-off running off the edge of the page. */}
-        <p aria-hidden="true" className="wide pointer-events-none mt-6 -mb-[0.18em] overflow-hidden text-[clamp(4rem,17vw,15rem)] leading-[0.8] whitespace-nowrap text-line select-none">
-          Arun Mehta
-        </p>
       </section>
   );
 }

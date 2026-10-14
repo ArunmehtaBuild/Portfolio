@@ -9,6 +9,7 @@ import { Experience } from "@/components/sections/Experience";
 import { Milestones } from "@/components/sections/Milestones";
 import { OffTheBoard } from "@/components/sections/OffTheBoard";
 import { Projects } from "@/components/sections/Projects";
+import { SiteFooter } from "@/components/sections/SiteFooter";
 import { stops } from "@/data/atlas";
 import { profile } from "@/data/profile";
 import { siteUrl } from "@/lib/site";
@@ -50,12 +51,7 @@ export default function Home() {
         <Contact />
       </main>
 
-      <footer className="relative z-10 border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 py-6 pb-10 font-mono text-[0.7rem] text-muted sm:px-8">
-          <span>© 2026 Arun Mehta</span>
-          <span>Every figure is sourced. Team results are marked as team results.</span>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
     </ActiveStopProvider>
