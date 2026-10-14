@@ -5,6 +5,7 @@
 // Rules come from CLAUDE.md: no unverified claims, no phone number, never "AI Engineer",
 // never an internship, never call Arun CTO, never list the DTU B-Plan result.
 
+import { createHash } from "node:crypto";
 import { milestones } from "../src/data/milestones.ts";
 import { NEXERA_CHECKED_ON, nexera } from "../src/data/nexera.ts";
 import { offTheMap, profile, unmapped } from "../src/data/profile.ts";
@@ -15,7 +16,6 @@ const STALE_AFTER_DAYS = 30;
 const strict = process.argv.includes("--strict");
 
 const BANNED: [RegExp, string][] = [
-  [/[removed]/, "phone number"],
   [/\bAI Engineer\b/i, "the label \"AI Engineer\" (Arun's focus is systems, backend and ML systems)"],
   [/\bintern(ed)?\b|internship (at|with)/i, "any internship claim (Arun has done none)"],
   [/\b(I am|I'm|I’m|as) (the )?(CTO|chief technical officer)\b/i, "calling Arun CTO"],
@@ -23,6 +23,20 @@ const BANNED: [RegExp, string][] = [
   [/\bB-?Plan\b|e-Summit/i, "the DTU B-Plan result (Arun was not part of it)"],
   [/\b(sole|only) (developer|architect)\b/i, "sole-developer claims"],
 ];
+
+// SHA-256 of numbers that must never be published (e.g. a phone number). Stored as hashes so
+// the number itself never appears in this public repository.
+const PRIVATE_NUMBER_HASHES = new Set(["301fa22e6ac4e5109e8ae13cd6f761fa3380d5cff00f5488e3f459f24fc77530"]);
+
+function containsPrivateNumber(text: string): boolean {
+  for (const run of text.match(/\d[\d\s-]{8,}\d/g) ?? []) {
+    const digits = run.replace(/\D/g, "");
+    for (let i = 0; i + 10 <= digits.length; i++) {
+      if (PRIVATE_NUMBER_HASHES.has(createHash("sha256").update(digits.slice(i, i + 10)).digest("hex"))) return true;
+    }
+  }
+  return false;
+}
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -39,6 +53,7 @@ function walk(value: unknown, path: string): void {
     return;
   }
   if (typeof value === "string") {
+    if (containsPrivateNumber(value)) errors.push(`${path}: contains a private phone number`);
     for (const [pattern, why] of BANNED) {
       if (pattern.test(value)) errors.push(`${path}: contains ${why}: "${value.slice(0, 80)}"`);
     }
