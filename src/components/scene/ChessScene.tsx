@@ -47,6 +47,10 @@ const BOARD_TOP = BOARD.y + 0.2;
 const squareToWorld = ([file, rank]: [number, number]) =>
   new THREE.Vector3(BOARD.x + (file - 3.5) * SQUARE, BOARD_TOP, BOARD.z + (4.5 - rank) * SQUARE);
 
+// Fog fades distant stone into the page background, so it follows the page's tone.
+const FOG_IVORY = new THREE.Color("#f3eee4");
+const FOG_DARK = new THREE.Color("#05080b");
+
 const lerp = THREE.MathUtils.lerp;
 const damp = THREE.MathUtils.damp;
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
@@ -98,7 +102,15 @@ function Stone({ points, depth, position, rotation, map }: { points: [number, nu
 }
 
 function Board() {
-  const top = useMemo(() => boardTexture(), []);
+  const top = useMemo(() => boardTexture("dark"), []);
+  const marble = useMemo(() => boardTexture("light"), []);
+  const cream = useRef<THREE.MeshStandardMaterial>(null!);
+  // The cream marble top sits just above the dark one and fades with the page tone.
+  useFrame((_, dt) => {
+    const ivory = document.documentElement.dataset.tone === "ivory" ? 1 : 0;
+    cream.current.opacity = THREE.MathUtils.damp(cream.current.opacity, ivory, 3, dt);
+    cream.current.visible = cream.current.opacity > 0.01;
+  });
   const side = useMemo(() => stoneTexture(4), []);
   const materials = useMemo(() => {
     const edge = new THREE.MeshStandardMaterial({ map: side, roughness: 0.9, color: "#c9ccd3" });
@@ -107,9 +119,15 @@ function Board() {
     return [edge, edge, face, edge, edge, edge];
   }, [top, side]);
   return (
-    <mesh position={BOARD} material={materials} receiveShadow castShadow>
-      <boxGeometry args={[SQUARE * 8 + 0.3, 0.4, SQUARE * 8 + 0.3]} />
-    </mesh>
+    <group>
+      <mesh position={BOARD} material={materials} receiveShadow castShadow>
+        <boxGeometry args={[SQUARE * 8 + 0.3, 0.4, SQUARE * 8 + 0.3]} />
+      </mesh>
+      <mesh position={[BOARD.x, BOARD_TOP + 0.002, BOARD.z]} rotation-x={-Math.PI / 2} receiveShadow>
+        <planeGeometry args={[SQUARE * 8 + 0.3, SQUARE * 8 + 0.3]} />
+        <meshStandardMaterial ref={cream} map={marble} roughness={0.5} metalness={0.05} transparent opacity={1} />
+      </mesh>
+    </group>
   );
 }
 
@@ -189,10 +207,12 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     camera.position.z = damp(camera.position.z, tz + lerp(from.camera[2], to.camera[2], t) * zoom, 5, dt);
     camera.lookAt(look.current);
 
-    const light = lerp(from.light, to.light, t);
+    const ivory = document.documentElement.dataset.tone === "ivory";
+    fog.current.color.lerp(ivory ? FOG_IVORY : FOG_DARK, 1 - Math.exp(-3 * dt));
+    const light = lerp(from.light, to.light, t) * (ivory ? 1.15 : 1);
     key.current.intensity = damp(key.current.intensity, 140 * light, 3, dt);
     rim.current.intensity = damp(rim.current.intensity, 2 * light, 3, dt);
-    ambient.current.intensity = damp(ambient.current.intensity, 0.1 + 0.25 * light, 3, dt);
+    ambient.current.intensity = damp(ambient.current.intensity, (ivory ? 0.35 : 0.1) + 0.25 * light, 3, dt);
     fog.current.far = damp(fog.current.far, lerp(from.fogFar, to.fogFar, t), 2, dt);
     stones.current.rotation.y = damp(stones.current.rotation.y, t * 0.05, 2, dt);
   });
@@ -201,7 +221,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
 
   return (
     <>
-      <fog ref={fog} attach="fog" args={["#05080b", 7, POSES.origin.fogFar]} />
+      <fog ref={fog} attach="fog" args={["#f3eee4", 7, POSES.origin.fogFar]} />
       <Studio />
       <ambientLight ref={ambient} intensity={0.3} />
       <spotLight
