@@ -4,76 +4,120 @@ import { motion } from "motion/react";
 import { useId } from "react";
 import { VisualFrame } from "./VisualFrame";
 
-// OKEANOS: a satellite scans the surface while 15 depth layers, warm at the top and cold
-// at 1,000 m, undulate below it. The same 15 depths the model reconstructs.
+// OKEANOS: an ocean cross-section to 1,000 m. Only the surface strip is "seen" by the
+// satellite; a scan line sweeps across and reconstructs the temperature below it, the
+// way the model turns surface fields into 15 depth levels. Colours are illustrative.
+const COLS = 36;
 const DEPTHS = [0, 5, 10, 20, 30, 50, 75, 100, 125, 150, 200, 300, 500, 700, 1000];
+const STOPS: [number, [number, number, number]][] = [
+  [0, [255, 196, 120]],
+  [0.25, [244, 132, 95]],
+  [0.5, [96, 160, 190]],
+  [0.75, [40, 104, 158]],
+  [1, [18, 52, 96]],
+];
 
-function mix(a: number[], b: number[], t: number) {
-  return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(",")})`;
+function colour(t: number) {
+  const v = Math.min(1, Math.max(0, t));
+  for (let i = 1; i < STOPS.length; i++) {
+    const [p1, c1] = STOPS[i];
+    const [p0, c0] = STOPS[i - 1];
+    if (v <= p1) {
+      const k = (v - p0) / (p1 - p0);
+      return `rgb(${c0.map((c, j) => Math.round(c + (c1[j] - c) * k)).join(",")})`;
+    }
+  }
+  return "rgb(18,52,96)";
 }
-const WARM = [255, 183, 107];
-const COLD = [38, 118, 168];
 
-function wave(y: number, amp: number, phase: number) {
-  let d = `M0,${y}`;
-  for (let x = 0; x <= 800; x += 20) d += ` L${x},${(y + Math.sin(x / 46 + phase) * amp).toFixed(1)}`;
-  return d;
-}
+// Deterministic field: warm near the surface, a wavy thermocline, cold at depth.
+const CELLS = DEPTHS.flatMap((_, row) =>
+  Array.from({ length: COLS }, (_, col) => {
+    const depthT = row / (DEPTHS.length - 1);
+    const wave = Math.sin(col / 4.2) * 0.07 + Math.sin(col / 9 + 1.3) * 0.05;
+    return { row, col, fill: colour(depthT * 1.05 + wave - 0.04) };
+  }),
+);
+
+const X0 = 46;
+const W = 330;
+const Y0 = 64;
+const ROW_H = 15;
+const CELL_W = W / COLS;
+// Rounded so server and browser render identical attributes.
+const cx = (col: number) => Math.round((X0 + col * CELL_W) * 100) / 100;
+const CW = Math.round((CELL_W + 0.4) * 100) / 100;
 
 export function DepthLayers() {
   // Unique per instance: the same illustration can be on screen twice (card and panel).
-  const clip = `${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-water`;
+  const clip = `${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-scan`;
+  const thermoTop = Y0 + 5 * ROW_H;
+  const thermoBottom = Y0 + 11 * ROW_H;
+
   return (
-    <VisualFrame fig={1} caption="15 depths, 0 to 1,000 m">
+    <VisualFrame fig={1} caption="Surface in, 15 depths out">
       <svg viewBox="0 0 400 320" className="absolute inset-0 h-full w-full">
         <defs>
           <clipPath id={clip}>
-            <rect x="0" y="0" width="346" height="320" />
+            <motion.rect
+              x={X0}
+              y={Y0 + ROW_H}
+              height={ROW_H * (DEPTHS.length - 1)}
+              initial={{ width: 0 }}
+              animate={{ width: [0, W, W, 0] }}
+              transition={{ duration: 7, times: [0, 0.6, 0.9, 1], repeat: Infinity, ease: "easeInOut" }}
+            />
           </clipPath>
         </defs>
 
-        {/* Satellite and scan beam */}
-        <motion.g initial={{ x: 40 }} animate={{ x: [40, 260, 40] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}>
-          <path d="M30 22 L10 62 L50 62 Z" style={{ fill: "var(--accent)" }} opacity="0.14" />
-          <rect x="22" y="12" width="16" height="9" rx="2" style={{ fill: "var(--accent)" }} />
-          <rect x="8" y="14" width="12" height="5" style={{ fill: "var(--muted)" }} />
-          <rect x="40" y="14" width="12" height="5" style={{ fill: "var(--muted)" }} />
+        {/* Satellite over the surface */}
+        <motion.g animate={{ x: [0, W - 30, 0] }} transition={{ duration: 7, times: [0, 0.6, 1], repeat: Infinity, ease: "easeInOut" }}>
+          <path d={`M${X0 + 15} 26 L${X0 + 3} ${Y0} L${X0 + 27} ${Y0} Z`} style={{ fill: "var(--accent)" }} opacity="0.16" />
+          <rect x={X0 + 8} y="16" width="14" height="8" rx="2" style={{ fill: "var(--accent)" }} />
+          <rect x={X0 - 3} y="18" width="10" height="4" style={{ fill: "var(--muted)" }} />
+          <rect x={X0 + 23} y="18" width="10" height="4" style={{ fill: "var(--muted)" }} />
         </motion.g>
 
-        {/* Layers draw in once (parent variants); each drifts on its own CSS loop. */}
-        <motion.g clipPath={`url(#${clip})`} initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.3 }}>
-          {DEPTHS.map((depth, i) => {
-            const y = 70 + i * 16;
-            const t = i / (DEPTHS.length - 1);
-            return (
-              <g key={depth} style={{ animation: `drift ${7 + i * 0.45}s ease-in-out ${-i * 0.7}s infinite alternate` }}>
-                <motion.path
-                  d={wave(y, 3.2 - t * 2, i * 0.6)}
-                  fill="none"
-                  stroke={mix(WARM, COLD, t)}
-                  strokeWidth={i === 0 ? 2.4 : 1.6}
-                  strokeLinecap="round"
-                  variants={{
-                    hidden: { pathLength: 0 },
-                    shown: { pathLength: 1, transition: { duration: 1.2, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] } },
-                  }}
-                />
-              </g>
-            );
-          })}
-        </motion.g>
+        {/* Ghost of the unknown subsurface */}
+        <rect x={X0} y={Y0 + ROW_H} width={W} height={ROW_H * (DEPTHS.length - 1)} style={{ fill: "var(--line)" }} opacity="0.45" />
 
-        {DEPTHS.map((depth, i) => (
-          <text key={depth} x="392" y={73 + i * 16} textAnchor="end" className="font-mono" fontSize="8" style={{ fill: "var(--muted)" }}>
-            {depth} m
-          </text>
+        {/* Surface row: always known */}
+        {CELLS.filter((c) => c.row === 0).map((c) => (
+          <rect key={`s${c.col}`} x={cx(c.col)} y={Y0} width={CW} height={ROW_H} fill={c.fill} />
         ))}
 
-        {/* A single Argo float, for scale: roughly one profile per 3° box every ten days. */}
-        <motion.g animate={{ y: [0, 150, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}>
-          <rect x="196" y="64" width="6" height="14" rx="3" style={{ fill: "var(--fg)" }} />
-          <line x1="199" y1="60" x2="199" y2="64" style={{ stroke: "var(--fg)" }} strokeWidth="1" />
-        </motion.g>
+        {/* Reconstructed rows, revealed by the scan */}
+        <g clipPath={`url(#${clip})`}>
+          {CELLS.filter((c) => c.row > 0).map((c) => (
+            <rect key={`${c.row}-${c.col}`} x={cx(c.col)} y={Y0 + c.row * ROW_H} width={CW} height={ROW_H + 0.4} fill={c.fill} />
+          ))}
+        </g>
+
+        {/* Scan line */}
+        <motion.line
+          y1={Y0}
+          y2={Y0 + ROW_H * DEPTHS.length}
+          style={{ stroke: "var(--fg)" }}
+          strokeWidth="1.5"
+          animate={{ x1: [X0, X0 + W, X0 + W, X0], x2: [X0, X0 + W, X0 + W, X0] }}
+          transition={{ duration: 7, times: [0, 0.6, 0.9, 1], repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Thermocline band */}
+        <rect x={X0} y={thermoTop} width={W} height={thermoBottom - thermoTop} fill="none" style={{ stroke: "var(--fg)" }} strokeDasharray="4 4" strokeWidth="1" opacity="0.7" />
+        <text x={X0 + W - 4} y={thermoTop - 4} textAnchor="end" className="font-mono" fontSize="8" style={{ fill: "var(--fg)" }}>
+          THERMOCLINE · 50–200 m
+        </text>
+
+        {/* Depth axis */}
+        {[0, 5, 10, 13, 14].map((row) => (
+          <text key={row} x={X0 - 6} y={Y0 + row * ROW_H + 10} textAnchor="end" className="font-mono" fontSize="7.5" style={{ fill: "var(--muted)" }}>
+            {DEPTHS[row]}m
+          </text>
+        ))}
+        <text x={X0} y={Y0 - 6} className="font-mono" fontSize="7.5" style={{ fill: "var(--muted)" }}>
+          SATELLITE SURFACE
+        </text>
       </svg>
     </VisualFrame>
   );
