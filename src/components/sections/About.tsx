@@ -1,10 +1,10 @@
-import { about, offTheMap } from "@/data/profile";
+import { about } from "@/data/profile";
 import { Portrait } from "../hero/Portrait";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 import { SectionHead } from "./SectionHead";
 
 // Who Arun is in one screen: a lead line, two short paragraphs, quick facts,
-// what's next, and life away from the keyboard.
+// and what's next.
 export function About() {
   return (
     <section id="about" data-stop="about" aria-labelledby="about-title" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
@@ -45,17 +45,6 @@ export function About() {
             </dl>
           </FadeUp>
 
-          <FadeUp delay={0.1}>
-            <p className="label mb-4">Outside the terminal</p>
-            <ul className="grid gap-3">
-              {offTheMap.map((item) => (
-                <li key={item.heading} className="flex items-baseline gap-4 rounded-2xl bg-card p-5">
-                  <span className="font-serif text-[1.6rem] italic">{item.heading}</span>
-                  <span className="text-[0.95rem] leading-[1.55] text-muted">{item.text}</span>
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
         </div>
       </div>
     </section>

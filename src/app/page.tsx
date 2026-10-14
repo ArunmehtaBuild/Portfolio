@@ -7,6 +7,7 @@ import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
 import { Milestones } from "@/components/sections/Milestones";
+import { OffTheBoard } from "@/components/sections/OffTheBoard";
 import { Projects } from "@/components/sections/Projects";
 import { stops } from "@/data/atlas";
 import { profile } from "@/data/profile";
@@ -45,6 +46,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <Milestones />
+        <OffTheBoard />
         <Contact />
       </main>
 
