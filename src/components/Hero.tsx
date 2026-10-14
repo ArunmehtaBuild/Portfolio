@@ -16,10 +16,14 @@ export function Hero() {
       <h1 id="origin-title" className="mt-6 text-[3.4rem] leading-[0.95] font-medium tracking-[-0.025em] sm:text-[5.2rem]">
         {profile.name}
       </h1>
-      <p className="mt-6 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[0.85rem] text-muted">
+      <p className="mt-6 flex flex-col gap-y-1 font-mono text-[0.85rem] text-muted sm:flex-row sm:flex-wrap sm:gap-x-3">
         {profile.tagline.map((part, i) => (
           <span key={part} className="flex items-center gap-3">
-            {i > 0 && <span aria-hidden="true" className="text-survey">·</span>}
+            {i > 0 && (
+              <span aria-hidden="true" className="hidden text-survey sm:inline">
+                ·
+              </span>
+            )}
             {part}
           </span>
         ))}
