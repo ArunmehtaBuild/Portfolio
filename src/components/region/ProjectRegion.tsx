@@ -8,6 +8,8 @@ import { Chips } from "./Chips";
 import { StatRow } from "./StatRow";
 import { WorkGrid } from "./WorkGrid";
 
+const sentenceCase = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
 export function ProjectRegion({ region }: { region: Region }) {
   const Visual = visuals[region.slug];
 
@@ -62,7 +64,7 @@ export function ProjectRegion({ region }: { region: Region }) {
             <FadeUp>
               <p className="label !text-accent">My part</p>
               <h3 className="mt-3 text-[clamp(1.8rem,3.4vw,2.6rem)] leading-[1.05] font-semibold tracking-[-0.02em]">
-                {region.myWorkHeading.replace(/^What I did: /, "")}
+                {sentenceCase(region.myWorkHeading.replace(/^What I did: /, ""))}
               </h3>
             </FadeUp>
             <FadeUp delay={0.1}>
