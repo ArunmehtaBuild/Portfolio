@@ -11,7 +11,7 @@ export function VisualFrame({ fig, caption, children }: { fig: number; caption: 
         </span>
         <span className="font-mono text-[0.62rem] tracking-[0.14em] text-muted uppercase">Illustration</span>
       </div>
-      <div aria-hidden="true" className="relative aspect-[5/4] w-full">
+      <div aria-hidden="true" className="relative aspect-[5/4] w-full overflow-hidden">
         {children}
       </div>
     </figure>
