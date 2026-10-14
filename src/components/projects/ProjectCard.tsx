@@ -35,7 +35,7 @@ export function ProjectCard({ region, order }: { region: Region; order: number }
       </div>
 
       <div className="px-6 pt-5 sm:px-7">
-        <div className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]">{Visual && <Visual />}</div>
+        <div className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] [&_[data-visual]]:aspect-[16/10]">{Visual && <Visual />}</div>
       </div>
 
       <div className="flex flex-1 flex-col px-6 pt-7 pb-6 sm:px-7 sm:pb-7">
