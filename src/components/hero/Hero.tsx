@@ -10,7 +10,6 @@ export function Hero() {
     { label: "Email", href: `mailto:${profile.email}` },
     ...(profile.resumeHref ? [{ label: "Résumé", href: profile.resumeHref }] : []),
   ];
-  const [lead, ...rest] = profile.intro;
 
   return (
     <section id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
@@ -37,24 +36,17 @@ export function Hero() {
             ))}
           </FadeUp>
 
-          <FadeUp delay={0.75} className="mt-10 max-w-[38rem]">
-            <p className="font-serif text-[clamp(1.6rem,2.6vw,2.1rem)] leading-[1.18]">{lead}</p>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {rest.map((line, i) => (
-                <p key={line} className="flex gap-3 text-[0.98rem] leading-[1.55] text-muted">
-                  <span className="font-mono text-[0.72rem] text-accent">0{i + 1}</span>
-                  {line}
-                </p>
-              ))}
-            </div>
+          <FadeUp delay={0.75} className="mt-10 max-w-[36rem]">
+            <p className="font-serif text-[clamp(1.6rem,2.6vw,2.15rem)] leading-[1.15]">{profile.headline}</p>
+            <p className="mt-4 text-[1.02rem] leading-[1.6] text-muted">{profile.subline}</p>
           </FadeUp>
 
           <FadeUp delay={0.9} className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="#nexera"
+              href="#projects"
               className="group inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 font-mono text-[0.8rem] tracking-[0.06em] text-bg uppercase transition-transform hover:-translate-y-0.5"
             >
-              Explore the map
+              See my work
               <span aria-hidden="true" className="transition-transform group-hover:translate-y-0.5">↓</span>
             </a>
             {links.map((link) => (

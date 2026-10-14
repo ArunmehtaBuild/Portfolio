@@ -35,11 +35,7 @@ export function RouteRibbon({ stops }: { stops: Stop[] }) {
             transition={{ duration: 0.5, delay: 1.1 + i * 0.07 }}
           >
             <a href={`#${stop.id}`} className="group flex flex-col items-center gap-2">
-              <span
-                className={`size-4 rounded-full border-2 transition-all duration-300 group-hover:scale-125 ${
-                  stop.uncharted ? "border-dashed border-muted bg-bg" : "border-accent bg-bg group-hover:bg-accent"
-                }`}
-              />
+              <span className="size-4 rounded-full border-2 border-accent bg-bg transition-all duration-300 group-hover:scale-125 group-hover:bg-accent" />
               <span className="font-mono text-[0.68rem] tracking-[0.08em] text-muted uppercase transition-colors group-hover:text-fg">
                 {String(i + 1).padStart(2, "0")} {stop.label}
               </span>
