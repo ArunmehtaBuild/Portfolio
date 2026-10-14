@@ -37,7 +37,7 @@ export interface WorkItem {
 }
 
 /** Colour theme for a region; values live in globals.css as [data-tone=...]. */
-export type Tone = "sand" | "ocean" | "signal" | "gold" | "violet" | "rose" | "ink";
+export type Tone = "ivory" | "sand" | "ocean" | "signal" | "gold" | "violet" | "rose" | "ink";
 
 export interface Region {
   slug: string;
