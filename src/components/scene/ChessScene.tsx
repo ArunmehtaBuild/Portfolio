@@ -29,7 +29,7 @@ interface Pose {
 }
 
 const POSES: Record<string, Pose> = {
-  origin: { piece: "pawn", square: [4, 2], camera: [-0.9, 1.5, 7.6], aim: [-1.55, 0.75], light: 1, fogFar: 24 },
+  origin: { piece: "pawn", square: [4, 2], camera: [-1.2, 1.9, 9.6], aim: [-2.35, 0.55], light: 1, fogFar: 26 },
   about: { piece: "pawn", square: [4, 4], camera: [-2.2, 2.3, 8], aim: [-1.7, 0.85], light: 0.8, fogFar: 22 },
   experience: { piece: "knight", square: [5, 6], camera: [-3, 3.1, 9], aim: [-2.55, -0.45], light: 0.62, fogFar: 20 },
   projects: { piece: "bishop", square: [2, 3], camera: [-3.4, 3.6, 7], aim: [-1.6, 0.6], light: 0.12, fogFar: 10 },

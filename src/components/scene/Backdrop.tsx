@@ -51,8 +51,10 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
           <ChessScene order={order} onLost={() => setLost(true)} />
         </SceneBoundary>
       )}
-      {/* Vignette so text over the scene always has contrast */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_30%,rgba(5,8,11,0.65)_80%)]" />
+      {/* Scrim: the text column (left on desktop, top on phones) always sits on clean dark,
+          while the board stays bright on the right. Plus a soft vignette. */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,26,0.55)_0%,rgba(8,18,26,0.2)_40%,rgba(8,18,26,0.75)_100%)] md:bg-[linear-gradient(90deg,rgba(8,18,26,0.95)_0%,rgba(8,18,26,0.88)_36%,rgba(8,18,26,0.4)_58%,transparent_76%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_35%,rgba(5,8,11,0.6)_85%)]" />
     </motion.div>
   );
 }
