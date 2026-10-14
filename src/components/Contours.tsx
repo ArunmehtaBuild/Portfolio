@@ -22,19 +22,19 @@ function ring(cx: number, cy: number, radius: number, seed: number, steps = 48):
   return `${d}Z`;
 }
 
-const RINGS = Array.from({ length: 9 }, (_, i) => ring(520, 260, 36 + i * 30, 0.6 + i * 0.35));
+const RINGS = Array.from({ length: 9 }, (_, i) => ring(720, 230, 36 + i * 30, 0.6 + i * 0.35));
 
 export function Contours({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 900 520" className={className} aria-hidden="true" focusable="false">
-      <g fill="none" stroke="var(--contour)" strokeWidth="1">
+      <g fill="none" style={{ stroke: "var(--contour)" }} strokeWidth="1">
         {RINGS.map((d, i) => (
           <path key={i} d={d} strokeDasharray={i === 6 ? "4 6" : undefined} opacity={1 - i * 0.07} />
         ))}
       </g>
-      <g stroke="var(--survey)" strokeWidth="1.2">
-        <line x1="514" y1="260" x2="526" y2="260" />
-        <line x1="520" y1="254" x2="520" y2="266" />
+      <g style={{ stroke: "var(--survey)" }} strokeWidth="1.2">
+        <line x1="714" y1="230" x2="726" y2="230" />
+        <line x1="720" y1="224" x2="720" y2="236" />
       </g>
     </svg>
   );
