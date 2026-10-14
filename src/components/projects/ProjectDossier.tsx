@@ -35,7 +35,7 @@ export function ProjectDossier({ region, prev, next }: { region: Region; prev: R
       </header>
 
       {Visual && (
-        <FadeUp className="mt-14">
+        <FadeUp className="mt-14 [&_[data-visual]]:aspect-[16/10] sm:[&_[data-visual]]:aspect-[2/1]">
           <Visual />
         </FadeUp>
       )}
@@ -74,7 +74,7 @@ export function ProjectDossier({ region, prev, next }: { region: Region; prev: R
               {sentenceCase(region.myWorkHeading.replace(/^What I did: /, ""))}
             </h2>
           </div>
-          <Chips items={region.myStack} label="My tools" strong />
+          {region.myStack.length > 0 && <Chips items={region.myStack} label="My tools" strong />}
         </div>
         <WorkGrid items={region.myWork} />
       </section>
