@@ -97,14 +97,23 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
   useFrame(({ camera }, dt) => {
     const { from, to, t } = pose();
     const mx = mobile ? 0.3 : 1;
-    const target = new THREE.Vector3(lerp(from.sphere[0], to.sphere[0], t) * mx, lerp(from.sphere[1], to.sphere[1], t) + (mobile ? 0.6 : 0), lerp(from.sphere[2], to.sphere[2], t));
+    const lookX = lerp(from.look[0], to.look[0], t) * mx;
+    const lookY = lerp(from.look[1], to.look[1], t);
+    const target = new THREE.Vector3(lerp(from.sphere[0], to.sphere[0], t) * mx, lerp(from.sphere[1], to.sphere[1], t), lerp(from.sphere[2], to.sphere[2], t));
+    // Phones have one column of text, so the sphere moves out of its way and sits in the
+    // top-right corner (a little larger in the hero).
+    const heroWeight = from === POSES.origin ? 1 - t : 0;
+    if (mobile) {
+      target.x = lookX + lerp(1.05, 0.8, heroWeight);
+      target.y = lookY + lerp(1.75, 1.85, heroWeight);
+    }
     const s = sphere.current;
 
     // Glide toward the pose, then roll by the distance actually travelled.
     s.position.x = damp(s.position.x, target.x, 3, dt);
     s.position.y = damp(s.position.y, target.y, 3, dt);
     s.position.z = damp(s.position.z, target.z, 3, dt);
-    const scale = lerp(from.scale, to.scale, t) * (mobile ? 0.72 : 1);
+    const scale = mobile ? lerp(0.42, 0.55, heroWeight) : lerp(from.scale, to.scale, t);
     s.scale.setScalar(damp(s.scale.x, scale, 3, dt));
     const dx = s.position.x - last.current.x;
     const dz = s.position.z - last.current.z;
