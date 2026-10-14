@@ -2,6 +2,7 @@ import { ActiveStopProvider } from "@/components/atlas/ActiveStop";
 import { AtlasStrip } from "@/components/atlas/AtlasStrip";
 import { SiteHeader } from "@/components/atlas/SiteHeader";
 import { Hero } from "@/components/hero/Hero";
+import { Mascot } from "@/components/mascot/Mascot";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
@@ -36,6 +37,7 @@ export default function Home() {
       </a>
       <SiteHeader />
       <AtlasStrip />
+      <Mascot />
 
       <main className="overflow-x-clip">
         <Hero />
