@@ -1,4 +1,4 @@
-import type { Rich, Source, Stat } from "./types";
+import type { Source, Stat, Tone, WorkItem } from "./types";
 
 // Public figures from nexeraofficial.in and the IPUNEX YouTube channel. Re-check them
 // on the day of every release and update NEXERA_CHECKED_ON (see content/nexera.md).
@@ -22,6 +22,8 @@ export const nexera = {
   mapLabel: "Nexera",
   bearing: "Region 01 · GGSIPU, Delhi · 28.59°N 77.02°E",
   title: "Students lost in scattered material",
+  statement: "Everything a GGSIPU semester asks of you, in one place.",
+  tone: "sand" as Tone,
   project: "Nexera",
   role: "Director & COO",
   period: "Oct 2025 – present",
@@ -34,10 +36,23 @@ export const nexera = {
     "Nexera brings it together. **IPUNEX** covers academics (syllabus, free notes and PYQs, lectures and exam-focused courses), **SkillX** covers skills beyond exams, and **IPUClan** connects GGSIPU college communities in one place.",
 
   running: [
-    "I manage the core departments and the workflows that keep Nexera moving, from our paid batches to the IPUNEX YouTube channel.",
-    "I own the workflow for everything that goes on the site, and I run batch launches end to end: getting notes and lectures ready, coordinating the people who make them, and making sure students have a smooth experience from enrolment to exam day.",
-    "I also designed the full workflow for our Campus Ambassador Program.",
-  ] satisfies Rich[],
+    {
+      title: "Departments and workflows",
+      text: "I manage the core departments and the workflows that keep Nexera moving, from our paid batches to the IPUNEX YouTube channel.",
+    },
+    {
+      title: "Site content",
+      text: "I own the workflow for everything that goes on the site.",
+    },
+    {
+      title: "Batch launches",
+      text: "I run launches end to end: getting notes and lectures ready, coordinating the people who make them, and making sure students have a smooth experience from enrolment to exam day.",
+    },
+    {
+      title: "Campus Ambassador Program",
+      text: "I designed the program’s full workflow, then built the system behind it.",
+    },
+  ] satisfies WorkItem[],
 
   launches: [
     { when: "May – Jun 2026", what: "End-semester batches" },

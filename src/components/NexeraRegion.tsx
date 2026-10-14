@@ -31,9 +31,9 @@ export function NexeraRegion() {
       </Block>
 
       <Block label="What I do: running it" accent>
-        {nexera.running.map((p) => (
-          <p key={p}>
-            <RichText text={p} />
+        {nexera.running.map((item) => (
+          <p key={item.title}>
+            <RichText text={item.text} />
           </p>
         ))}
       </Block>
