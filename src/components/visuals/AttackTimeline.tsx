@@ -75,9 +75,16 @@ export function AttackTimeline() {
           transition={{ duration: loop, times: [0, 0.75, 1], repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Kill-chain stages */}
+        {/* Kill-chain stages, on two rows so long names never collide. */}
         {STAGES.map((stage, i) => (
-          <text key={stage} x={20 + i * 96} y="300" className="font-mono" fontSize="8.5" style={{ fill: "var(--muted)" }}>
+          <text
+            key={stage}
+            x={20 + (i % 2) * 190}
+            y={290 + Math.floor(i / 2) * 15}
+            className="font-mono"
+            fontSize="8.5"
+            style={{ fill: "var(--muted)" }}
+          >
             {String(i + 1).padStart(2, "0")} {stage.toUpperCase()}
           </text>
         ))}
