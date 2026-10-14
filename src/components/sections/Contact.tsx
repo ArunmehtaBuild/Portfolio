@@ -1,4 +1,4 @@
-import { offTheMap, profile } from "@/data/profile";
+import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 
 export function Contact() {
@@ -9,26 +9,11 @@ export function Contact() {
   ];
 
   return (
-    <>
-      <section aria-labelledby="off-title" className="mx-auto max-w-7xl px-5 pb-10 sm:px-8">
-        <h2 id="off-title" className="label">
-          Off the map
-        </h2>
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-          {offTheMap.map((item, i) => (
-            <FadeUp as="li" key={item.heading} delay={i * 0.08} className="flex items-baseline gap-5 rounded-2xl border border-line p-6">
-              <span className="font-serif text-[2rem] italic">{item.heading}</span>
-              <span className="text-[0.98rem] leading-[1.6] text-muted">{item.text}</span>
-            </FadeUp>
-          ))}
-        </ul>
-      </section>
-
-      <section id="contact" data-stop="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
+    <section id="contact" data-stop="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 sm:px-8 sm:pt-32">
           <p className="label flex items-center gap-3">
             <span className="inline-block h-px w-10 bg-accent" />
-            Region 09 · Contact
+            05 · Contact
           </p>
           <h2 id="contact-title" className="mt-8 max-w-[18ch] text-[clamp(2.4rem,6vw,5rem)] leading-[1] font-semibold tracking-[-0.03em]">
             <SplitWords text="Open to internships, collaborations and hard problems." />
@@ -74,6 +59,5 @@ export function Contact() {
           Arun Mehta
         </p>
       </section>
-    </>
   );
 }
