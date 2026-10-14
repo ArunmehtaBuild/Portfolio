@@ -156,7 +156,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     // A slow sway, not a full spin, so the knight always shows its profile to the camera.
     spin.current += dt;
     g.rotation.y = Math.sin(spin.current * 0.35) * 0.5 + 0.15;
-    g.scale.setScalar(damp(g.scale.x, mobile ? 0.5 : 1, 4, dt));
+    g.scale.setScalar(damp(g.scale.x, mobile ? 0.42 : 0.8, 4, dt));
 
     // Swap pieces mid-move: the old one spins down as the new one spins up.
     const swap = smooth(clamp01((t - 0.35) / 0.3));
@@ -175,7 +175,8 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     // small in the top-right corner, clear of the text.
     const aim = mobile ? ([-1.15, -2.25] as const) : ([lerp(from.aim[0], to.aim[0], t), lerp(from.aim[1], to.aim[1], t)] as const);
     const tx = g.position.x + aim[0];
-    const ty = BOARD_TOP + 1 + aim[1];
+    // Aim at the (scaled) piece's middle so it keeps the same place on screen at any size.
+    const ty = BOARD_TOP + (mobile ? 1 : 0.72) + aim[1];
     const tz = g.position.z;
     // The camera keeps pace with the piece, so a mid-air move never swings it into the text.
     look.current.set(damp(look.current.x, tx, 5, dt), damp(look.current.y, ty, 5, dt), damp(look.current.z, tz, 5, dt));
