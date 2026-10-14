@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  const charted = stops.filter((s) => !s.uncharted && s.id !== "origin");
+  const charted = stops.filter((s) => s.id !== "origin");
 
   return (
     <main className="relative isolate mx-auto flex min-h-screen max-w-3xl flex-col justify-center overflow-x-clip px-4 py-20 sm:px-6">
