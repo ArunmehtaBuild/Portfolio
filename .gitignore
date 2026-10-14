@@ -42,3 +42,7 @@ next-env.d.ts
 
 # os
 Thumbs.db
+
+# private working notes (kept locally, never published)
+content/
+CLAUDE.md

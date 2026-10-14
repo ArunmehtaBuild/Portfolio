@@ -29,7 +29,7 @@ npm run dev
 
 ## How the content works
 
-- `content/` holds the source material: verified facts, evidence notes and the full site copy.
+- The source material (verified facts, evidence notes, drafts) is kept locally and not published.
 - `src/data/` holds the typed data the site renders. Every figure carries a `source`, a `status`
   (`verified`, `confirmed` or `team-reported`) and the date it was last checked.
 - `scripts/check-facts.mts` runs before every build. It fails on unsourced claims and on phrases the site
@@ -42,5 +42,4 @@ src/app/          layout, page, Open Graph image, sitemap, robots, icon
 src/components/   Hero, NexeraRegion, ProjectRegion, AtlasMap, Milestones, Unmapped, Contact, ...
 src/data/         profile, nexera, regions, milestones, atlas stops, types
 scripts/          check-facts.mts
-content/          verified source material and site copy
 ```
