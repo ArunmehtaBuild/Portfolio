@@ -38,15 +38,14 @@ export function AtlasMap({ stops, ids }: Props) {
       <p className="label mb-4">The atlas</p>
       <div className="relative" style={{ height }}>
         <svg width="40" height={height} className="absolute top-0 left-0" aria-hidden="true">
-          <path d={d} fill="none" stroke="var(--line)" strokeWidth="1.5" strokeDasharray="3 5" />
+          <path d={d} fill="none" style={{ stroke: "var(--line)" }} strokeWidth="1.5" strokeDasharray="3 5" />
           <path
             d={d}
             fill="none"
-            stroke="var(--sea)"
             strokeWidth="1.5"
             pathLength={1}
-            strokeDasharray="1"
-            strokeDashoffset={1 - progress}
+            strokeDasharray="1 1"
+            style={{ stroke: "var(--sea)", strokeDashoffset: 1 - progress }}
             className="transition-[stroke-dashoffset] duration-500 ease-out"
           />
           {stops.map((stop, i) => {
@@ -54,11 +53,13 @@ export function AtlasMap({ stops, ids }: Props) {
             const isActive = i === activeIndex;
             return (
               <g key={stop.id} transform={`translate(${sway(i)},${PAD + i * ROW})`}>
-                {isActive && <circle r="9" fill="none" stroke="var(--survey)" strokeWidth="1.2" />}
+                {isActive && <circle r="9" fill="none" style={{ stroke: "var(--survey)" }} strokeWidth="1.2" />}
                 <circle
                   r={isActive ? 4.5 : 3.5}
-                  fill={stop.uncharted ? "var(--paper)" : reached ? "var(--sea)" : "var(--paper)"}
-                  stroke={stop.uncharted ? "var(--faint)" : reached ? "var(--sea)" : "var(--faint)"}
+                  style={{
+                    fill: !stop.uncharted && reached ? "var(--sea)" : "var(--paper)",
+                    stroke: !stop.uncharted && reached ? "var(--sea)" : "var(--faint)",
+                  }}
                   strokeWidth="1.2"
                   strokeDasharray={stop.uncharted ? "2 2" : undefined}
                   className="transition-all duration-300"
