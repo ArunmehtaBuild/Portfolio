@@ -4,11 +4,11 @@ import { motion, useScroll, useTransform } from "motion/react";
 import dynamic from "next/dynamic";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import type { Stop } from "@/data/atlas";
-import { OrbFallback } from "./OrbFallback";
+import { ChessFallback } from "./ChessFallback";
 import { SceneBoundary } from "./SceneBoundary";
 
 // The 3D scene loads in the browser only, after the page, so it never blocks first paint.
-const OrbScene = dynamic(() => import("./OrbScene"), { ssr: false });
+const ChessScene = dynamic(() => import("./ChessScene"), { ssr: false });
 
 // Checked once per visit: can this browser create a WebGL context at all? If WebGL is
 // disabled or blocked we never mount the canvas, so three.js doesn't log errors either.
@@ -29,7 +29,7 @@ const noSubscribe = () => () => {};
 // Fixed, full-screen 3D layer behind every section. Purely decorative.
 export function Backdrop({ stops }: { stops: Stop[] }) {
   const order = useMemo(() => stops.map((s) => s.id), [stops]);
-  // WebGL can be missing or blocked; then a CSS sphere stands in so the page never breaks.
+  // WebGL can be missing or blocked; then flat gold silhouettes stand in so the page never breaks.
   const [lost, setLost] = useState(false);
   const supported = useSyncExternalStore(noSubscribe, webglAvailable, () => true);
   // The dotted grid belongs to the hero: it sits behind the sphere and fades as you leave.
@@ -45,10 +45,10 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
     >
       <motion.div style={{ opacity: gridOpacity }} className="dot-grid absolute inset-0" />
       {lost || !supported ? (
-        <OrbFallback />
+        <ChessFallback />
       ) : (
-        <SceneBoundary fallback={<OrbFallback />}>
-          <OrbScene order={order} onLost={() => setLost(true)} />
+        <SceneBoundary fallback={<ChessFallback />}>
+          <ChessScene order={order} onLost={() => setLost(true)} />
         </SceneBoundary>
       )}
       {/* Vignette so text over the scene always has contrast */}
