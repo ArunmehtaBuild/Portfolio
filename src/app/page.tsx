@@ -1,18 +1,14 @@
 import { ActiveStopProvider } from "@/components/atlas/ActiveStop";
 import { AtlasStrip } from "@/components/atlas/AtlasStrip";
-import { MiniMap } from "@/components/atlas/MiniMap";
 import { SiteHeader } from "@/components/atlas/SiteHeader";
 import { Hero } from "@/components/hero/Hero";
-import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { NexeraRegion } from "@/components/region/NexeraRegion";
-import { ProjectRegion } from "@/components/region/ProjectRegion";
-import { CivicSetu } from "@/components/sections/CivicSetu";
+import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
+import { Experience } from "@/components/sections/Experience";
 import { Milestones } from "@/components/sections/Milestones";
-import { Unmapped } from "@/components/sections/Unmapped";
+import { Projects } from "@/components/sections/Projects";
 import { stops } from "@/data/atlas";
 import { profile } from "@/data/profile";
-import { regions } from "@/data/regions";
 import { siteUrl } from "@/lib/site";
 
 const personJsonLd = {
@@ -28,41 +24,36 @@ const personJsonLd = {
   sameAs: profile.links.map((l) => l.href),
 };
 
+// Overview first, depth on demand: each project opens in its own panel.
 export default function Home() {
   return (
-    <SmoothScroll>
-      <ActiveStopProvider stops={stops}>
-        <a
-          href="#nexera"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-bg"
-        >
-          Skip to the atlas
-        </a>
-        <SiteHeader />
-        <MiniMap />
-        <AtlasStrip />
+    <ActiveStopProvider stops={stops}>
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-bg"
+      >
+        Skip to content
+      </a>
+      <SiteHeader />
+      <AtlasStrip />
 
-        <main className="overflow-x-clip">
-          <Hero />
-          <NexeraRegion />
-          {regions.map((region) => (
-            <ProjectRegion key={region.slug} region={region} />
-          ))}
-          <CivicSetu />
-          <Milestones />
-          <Unmapped />
-          <Contact />
-        </main>
+      <main className="overflow-x-clip">
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Milestones />
+        <Contact />
+      </main>
 
-        <footer className="border-t border-line">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 py-6 pb-10 font-mono text-[0.7rem] text-muted sm:px-8">
-            <span>© 2026 Arun Mehta</span>
-            <span>Every figure is sourced. Team results are marked as team results.</span>
-          </div>
-        </footer>
+      <footer className="border-t border-line">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 py-6 pb-10 font-mono text-[0.7rem] text-muted sm:px-8">
+          <span>© 2026 Arun Mehta</span>
+          <span>Every figure is sourced. Team results are marked as team results.</span>
+        </div>
+      </footer>
 
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
-      </ActiveStopProvider>
-    </SmoothScroll>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+    </ActiveStopProvider>
   );
 }
