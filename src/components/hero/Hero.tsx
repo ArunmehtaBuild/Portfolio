@@ -1,6 +1,7 @@
 import { stops } from "@/data/atlas";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
+import { Greeting } from "./Greeting";
 import { Portrait } from "./Portrait";
 import { RouteRibbon } from "./RouteRibbon";
 
@@ -15,15 +16,16 @@ export function Hero() {
     <section id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
       <div aria-hidden="true" className="chart-grid pointer-events-none absolute inset-0 -z-10" />
 
-      <div className="mx-auto grid min-h-[100svh] max-w-7xl content-center gap-12 px-5 pt-28 pb-14 sm:px-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_27rem]">
+      {/* Oversized gold greeting, centred over everything */}
+      <div className="flex justify-center px-5 pt-24 sm:pt-28">
+        <Greeting />
+      </div>
+
+      <div className="mx-auto grid max-w-7xl content-center gap-12 px-5 pt-6 pb-14 sm:px-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_27rem]">
         <div className="flex flex-col justify-center">
           <FadeUp className="label">Portfolio · New Delhi · 28.61°N 77.21°E</FadeUp>
 
-          <p lang="hi" className="mt-8 font-hindi text-[clamp(2.4rem,5vw,3.8rem)] leading-none text-accent">
-            <SplitWords text="नमस्कार" immediate delay={0.05} />
-          </p>
-
-          <h1 id="origin-title" className="mt-3 leading-[0.86]">
+          <h1 id="origin-title" className="mt-6 leading-[0.86]">
             <span className="block font-serif text-[clamp(4.6rem,15vw,11.5rem)] italic tracking-[-0.02em]">
               <SplitWords text="Arun" immediate delay={0.15} />
             </span>
