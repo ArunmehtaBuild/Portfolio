@@ -27,10 +27,10 @@ export function ProjectRegion({ region }: { region: Region }) {
         <h3 className="label !text-survey">{region.myWorkHeading}</h3>
         <ul className="mt-4 space-y-3 text-[1.08rem] leading-[1.65]">
           {region.myWork.map((item) => (
-            <li key={item} className="grid grid-cols-[1rem_1fr] gap-2">
+            <li key={item.title} className="grid grid-cols-[1rem_1fr] gap-2">
               <span aria-hidden="true" className="mt-[0.7em] size-1.5 rotate-45 bg-survey" />
               <span>
-                <RichText text={item} />
+                <strong className="font-semibold">{item.title}.</strong> <RichText text={item.text} />
               </span>
             </li>
           ))}
