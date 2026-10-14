@@ -1,104 +1,109 @@
 @import "tailwindcss";
 
-/* Problem Atlas tokens. Light is "paper", dark is "night chart". */
+/*
+ * Problem Atlas, chart edition.
+ * The page has one live palette (--bg, --fg, ...). Each region sets a tone on <html>
+ * (data-tone) as you scroll into it, and because the colours are registered with
+ * @property they cross-fade instead of snapping. Without JS the base "ink" tone stays.
+ */
+
+@property --bg { syntax: "<color>"; inherits: true; initial-value: #08121a; }
+@property --fg { syntax: "<color>"; inherits: true; initial-value: #ebe7dd; }
+@property --muted { syntax: "<color>"; inherits: true; initial-value: #9aa7aa; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: #1e2d36; }
+@property --accent { syntax: "<color>"; inherits: true; initial-value: #d6ff5c; }
+@property --card { syntax: "<color>"; inherits: true; initial-value: #0d1a23; }
+
 :root {
-  --paper: #f3eee3;
-  --surface: #fbf8f1;
-  --ink: #1c2629;
-  --muted: #586669;
-  --faint: #6a6658;
-  --line: #d3c9b3;
-  --contour: #c4b89c;
-  --sea: #1d5c78;
-  --sea-soft: #dce8ea;
-  --survey: #a8402c;
-  --focus: #1d5c78;
+  --bg: #08121a;
+  --fg: #ebe7dd;
+  --muted: #9aa7aa;
+  --line: #1e2d36;
+  --accent: #d6ff5c;
+  --card: #0d1a23;
+  color-scheme: dark;
+  transition:
+    --bg 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --fg 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --muted 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --line 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --accent 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --card 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Region tones. Contrast of fg and muted on bg is at least WCAG AA in every tone. */
+:root[data-tone="sand"] {
+  --bg: #eee8da; --fg: #13191c; --muted: #535c5f; --line: #d2c8b2; --accent: #0e5c68; --card: #f7f2e7;
   color-scheme: light;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0e181c;
-    --surface: #132228;
-    --ink: #e9e2d3;
-    --muted: #a3b0ae;
-    --faint: #8a9896;
-    --line: #26393f;
-    --contour: #22363c;
-    --sea: #7cbbd4;
-    --sea-soft: #16303a;
-    --survey: #e58a6c;
-    --focus: #7cbbd4;
-    color-scheme: dark;
-  }
+:root[data-tone="ocean"] {
+  --bg: #051b2a; --fg: #e5f2f5; --muted: #93b4bf; --line: #12364a; --accent: #52d8f0; --card: #08263a;
 }
-
-:root[data-theme="dark"] {
-  --paper: #0e181c;
-  --surface: #132228;
-  --ink: #e9e2d3;
-  --muted: #a3b0ae;
-  --faint: #8a9896;
-  --line: #26393f;
-  --contour: #22363c;
-  --sea: #7cbbd4;
-  --sea-soft: #16303a;
-  --survey: #e58a6c;
-  --focus: #7cbbd4;
-  color-scheme: dark;
+:root[data-tone="signal"] {
+  --bg: #060e0a; --fg: #e2f1e7; --muted: #8aa594; --line: #142a1d; --accent: #6dff9e; --card: #0a1811;
+}
+:root[data-tone="gold"] {
+  --bg: #f3d35c; --fg: #1a1607; --muted: #4f4415; --line: #d8b73f; --accent: #1a1607; --card: #f7dd78;
+  color-scheme: light;
+}
+:root[data-tone="violet"] {
+  --bg: #0e0b1c; --fg: #ece9ff; --muted: #a7a2c8; --line: #241e3f; --accent: #a998ff; --card: #151129;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-surface: var(--surface);
-  --color-ink: var(--ink);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
   --color-muted: var(--muted);
-  --color-faint: var(--faint);
   --color-line: var(--line);
-  --color-contour: var(--contour);
-  --color-sea: var(--sea);
-  --color-sea-soft: var(--sea-soft);
-  --color-survey: var(--survey);
-  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --color-accent: var(--accent);
+  --color-card: var(--card);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Code", monospace;
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-serif);
-  font-optical-sizing: auto;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--sea);
-  color: var(--paper);
+  background: var(--accent);
+  color: var(--bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-/* Small caps label used for bearings, kickers and stat captions. */
+/* Mono kicker used for bearings and captions. */
 .label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-/* Links inside prose. */
+/* Wide display caps (Archivo's width axis). */
+.wide {
+  font-family: var(--font-sans);
+  font-stretch: 125%;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
 .prose-link {
-  color: var(--sea);
+  color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
@@ -107,21 +112,45 @@ body {
   text-decoration-thickness: 2px;
 }
 
-/* The dashed route that joins regions. */
-.route {
-  background-image: linear-gradient(to bottom, var(--line) 50%, transparent 50%);
-  background-size: 1px 10px;
-  background-repeat: repeat-y;
+/* Faint chart grid behind the page. */
+.chart-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--line) 55%, transparent) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+
+/* Lenis smooth scrolling. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  :root {
+    transition: none;
   }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
