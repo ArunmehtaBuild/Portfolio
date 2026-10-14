@@ -28,7 +28,7 @@ export default function NotFound() {
             <li key={stop.id}>
               <Link
                 href={`/#${stop.id}`}
-                className="inline-flex rounded-full border border-line px-3.5 py-1.5 font-mono text-[0.78rem] transition-colors hover:border-sea hover:text-sea"
+                className="inline-flex rounded-full border border-line px-3.5 py-1.5 font-mono text-[0.78rem] transition-colors hover:border-accent hover:text-accent"
               >
                 {stop.label}
               </Link>
@@ -39,7 +39,7 @@ export default function NotFound() {
 
       <Link
         href="/"
-        className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-mono text-[0.82rem] text-paper transition-opacity hover:opacity-85"
+        className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[0.82rem] text-bg transition-opacity hover:opacity-85"
       >
         <span aria-hidden="true">←</span> Back to the origin
       </Link>
