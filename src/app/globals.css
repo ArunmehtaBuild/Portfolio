@@ -143,6 +143,17 @@ body {
   mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
 }
 
+/* Hero grid: thin lines with a dot at every crossing, fading out toward the edges. */
+.dot-grid {
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--fg) 45%, transparent) 1.2px, transparent 1.6px),
+    linear-gradient(to right, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px);
+  background-size: 96px 96px;
+  background-position: -0.5px -0.5px, 0 0, 0 0;
+  mask-image: radial-gradient(ellipse 60% 55% at 62% 42%, black 25%, transparent 78%);
+}
+
 /* Lenis smooth scrolling. */
 html.lenis,
 html.lenis body {

@@ -2,6 +2,7 @@ import { ActiveStopProvider } from "@/components/atlas/ActiveStop";
 import { AtlasStrip } from "@/components/atlas/AtlasStrip";
 import { SiteHeader } from "@/components/atlas/SiteHeader";
 import { Hero } from "@/components/hero/Hero";
+import { Backdrop } from "@/components/scene/Backdrop";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
@@ -36,8 +37,9 @@ export default function Home() {
       </a>
       <SiteHeader />
       <AtlasStrip />
+      <Backdrop stops={stops} />
 
-      <main className="overflow-x-clip">
+      <main className="relative z-10 overflow-x-clip">
         <Hero />
         <About />
         <Experience />
@@ -46,7 +48,7 @@ export default function Home() {
         <Contact />
       </main>
 
-      <footer className="border-t border-line">
+      <footer className="relative z-10 border-t border-line">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 py-6 pb-10 font-mono text-[0.7rem] text-muted sm:px-8">
           <span>© 2026 Arun Mehta</span>
           <span>Every figure is sourced. Team results are marked as team results.</span>
