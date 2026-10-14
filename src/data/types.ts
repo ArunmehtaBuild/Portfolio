@@ -37,7 +37,7 @@ export interface WorkItem {
 }
 
 /** Colour theme for a region; values live in globals.css as [data-tone=...]. */
-export type Tone = "sand" | "ocean" | "signal" | "gold" | "violet" | "ink";
+export type Tone = "sand" | "ocean" | "signal" | "gold" | "violet" | "rose" | "ink";
 
 export interface Region {
   slug: string;
@@ -55,8 +55,8 @@ export interface Region {
   summary: string;
   /** Arun's role in a few words, shown on the card. */
   role: string;
-  /** "current": still being built. "featured": finished main project. */
-  status: "current" | "featured";
+  /** "current": still being built. "featured": main project. "first": where Arun started. */
+  status: "current" | "featured" | "first";
   /** Short badge on the card, e.g. the event or award. */
   badge: string;
   tone: Tone;
@@ -66,7 +66,7 @@ export interface Region {
   built: Rich;
   /** The team's stack, from the shared project write-up. */
   teamStack: string[];
-  /** Tools Arun used in his own part, backed by his commits or notes. */
+  /** Tools Arun used in their own part, backed by commits or notes. */
   myStack: string[];
   teamResults: Stat[];
   myWorkHeading: string;

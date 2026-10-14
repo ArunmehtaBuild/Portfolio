@@ -1,7 +1,8 @@
 import { regions } from "@/data/regions";
 
-// Project order everywhere: the ones still being built first, then the finished ones.
-export const orderedProjects = [...regions.filter((r) => r.status === "current"), ...regions.filter((r) => r.status === "featured")];
+// Project order everywhere: still being built, then main projects, then where Arun started.
+const rank = { current: 0, featured: 1, first: 2 } as const;
+export const orderedProjects = [...regions].sort((a, b) => rank[a.status] - rank[b.status]);
 
 /** The project, its position, and its neighbours (wrapping around), or null if unknown. */
 export function findProject(slug: string) {

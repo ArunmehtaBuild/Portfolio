@@ -9,7 +9,7 @@ import { createHash } from "node:crypto";
 import { milestones } from "../src/data/milestones.ts";
 import { NEXERA_CHECKED_ON, nexera } from "../src/data/nexera.ts";
 import { about, offTheMap, profile } from "../src/data/profile.ts";
-import { civicSetu, regions } from "../src/data/regions.ts";
+import { regions } from "../src/data/regions.ts";
 
 const STATUSES = new Set(["verified", "confirmed", "team-reported"]);
 const STALE_AFTER_DAYS = 30;
@@ -76,7 +76,6 @@ function requireSources(stats: { source?: unknown }[], path: string): void {
 walk({ profile, about, offTheMap }, "profile");
 walk(nexera, "nexera");
 walk(regions, "regions");
-walk(civicSetu, "civicSetu");
 walk(milestones, "milestones");
 
 requireSources(nexera.stats, "nexera.stats");
@@ -84,6 +83,7 @@ regions.forEach((r) => {
   requireSources(r.teamResults, `regions.${r.slug}.teamResults`);
   if (!r.contributionSource) errors.push(`regions.${r.slug}: missing contributionSource`);
   if (r.myWork.length === 0) errors.push(`regions.${r.slug}: "What I did" is empty`);
+  if (r.slug === "civic-setu" && r.myStack.length > 0) errors.push("regions.civic-setu: Arun wrote no core code, so it must list no personal tools");
 });
 milestones.forEach((m, i) => {
   if (!m.source) errors.push(`milestones[${i}]: missing source`);

@@ -2,7 +2,7 @@ import type { Region, Source } from "./types";
 
 // Shared project facts and team results come from the team write-up on Atharv Tiwari's
 // portfolio, which Arun approved for reuse as team results. Arun's own contributions are
-// confirmed by him and, where noted, checked against GitHub commit history.
+// confirmed by Arun and, where noted, checked against GitHub commit history.
 const teamWriteUp = (extra = ""): Source => ({
   status: "team-reported",
   source: `Team write-up, atharvportfolio-wheat.vercel.app${extra}`,
@@ -80,7 +80,7 @@ export const regions: Region[] = [
     ],
     contributionSource: {
       status: "confirmed",
-      source: "Arun Mehta; his SIH internal-round backend notes",
+      source: "Arun Mehta; Arun’s SIH internal-round backend notes",
       checkedOn: "2026-10-14",
     },
   },
@@ -247,20 +247,47 @@ export const regions: Region[] = [
       checkedOn: "2026-10-14",
     },
   },
+  {
+    slug: "civic-setu",
+    index: 6,
+    mapLabel: "Civic Setu",
+    bearing: "Where I started · Civic issue reporting",
+    title: "Complaints that disappear",
+    statement: "Report the pothole. Watch it get fixed.",
+    summary: "Citizens report a civic issue with a photo and location, then follow it until the municipality resolves it.",
+    role: "Idea & validation",
+    status: "first",
+    badge: "First project experience",
+    tone: "rose",
+    project: "Civic Setu",
+    context: "My first team project",
+    problem:
+      "A complaint to a municipality usually disappears: no acknowledgement, no owner, and no way to know whether anyone saw it.",
+    built:
+      "A citizen app for reporting issues with a photo and GPS location, a staff dashboard to triage and assign them, and an API behind both. Every report moves through visible stages until it’s resolved.",
+    teamStack: ["React Native", "Expo", "React", "Node.js", "Express", "MongoDB"],
+    myStack: [],
+    teamResults: [],
+    myWorkHeading: "What I did: the idea and the groundwork",
+    myWork: [
+      {
+        title: "The idea",
+        text: "Contributed to shaping what the platform should do and who it was for.",
+      },
+      {
+        title: "Validation",
+        text: "Helped check whether the idea held up before and while the team built it.",
+      },
+      {
+        title: "Working with the team",
+        text: "Worked through the project with the team. I didn’t write the core code; this is where I started learning how products get built.",
+      },
+    ],
+    evidence: [{ label: "Repository", href: "https://github.com/Atharv-tw/CIVIC_SETU" }],
+    contributionSource: {
+      status: "confirmed",
+      source: "Arun Mehta, 2026-10-14",
+      checkedOn: "2026-10-14",
+    },
+  },
 ];
-
-export const civicSetu = {
-  slug: "civic-setu",
-  index: 6,
-  mapLabel: "Civic Setu",
-  bearing: "Region 06 · Where I started",
-  title: "Complaints that disappear",
-  project: "Civic Setu",
-  context: "My first project",
-  text: "A platform that lets citizens report civic issues with a photo and location and follow them until they’re resolved. It was my first team project. I contributed to the idea, helped validate it and worked through it with the team. I didn’t write the core code, but it’s where I started.",
-  contributionSource: {
-    status: "confirmed",
-    source: "Arun Mehta, 2026-10-14",
-    checkedOn: "2026-10-14",
-  } satisfies Source,
-};
