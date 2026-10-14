@@ -38,6 +38,9 @@ const POSES: Record<string, Pose> = {
 };
 
 const KINDS: PieceKind[] = ["pawn", "knight", "bishop", "queen"];
+// The knight is the only asymmetric piece: turn it to face left, toward the text, so the
+// camera sees its profile rather than its mane.
+const FACING: Record<PieceKind, number> = { pawn: 0, knight: Math.PI, bishop: 0, queen: 0 };
 const SQUARE = 0.8;
 const BOARD = new THREE.Vector3(1.6, -0.75, -0.6);
 const BOARD_TOP = BOARD.y + 0.2;
@@ -155,7 +158,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     g.rotation.x = damp(g.rotation.x, (b.z - a.z) * 0.1 * Math.sin(Math.PI * t), 5, dt);
     // A slow sway, not a full spin, so the knight always shows its profile to the camera.
     spin.current += dt;
-    g.rotation.y = Math.sin(spin.current * 0.35) * 0.5 + 0.15;
+    g.rotation.y = Math.sin(spin.current * 0.35) * 0.28;
     g.scale.setScalar(damp(g.scale.x, mobile ? 0.42 : 0.8, 4, dt));
 
     // Swap pieces mid-move: the old one spins down as the new one spins up.
@@ -167,7 +170,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
       const s = damp(node.scale.x, w, 10, dt);
       node.scale.setScalar(s);
       node.visible = s > 0.01;
-      node.rotation.y = (1 - w) * 2.4;
+      node.rotation.y = FACING[kind] + (1 - w) * 2.4;
     }
 
     // Camera: aim beside the piece so it sits clear of the text column.
