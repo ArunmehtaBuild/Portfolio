@@ -55,7 +55,7 @@ export function Experience() {
 
         <div className="space-y-14 lg:col-span-8">
           <RunBuildTabs run={nexera.running} build={build} />
-          <StatRow stats={nexera.stats} caption="Nexera’s scale · the whole team’s numbers" note={`Public figures, checked ${checked}`} compact />
+          <StatRow stats={nexera.stats} caption="Nexera’s scale · company figures" note={`Public figures, checked ${checked}`} compact />
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ import type { Link } from "./types";
 export const profile = {
   name: "Arun Mehta",
   /** Chips under the name. */
-  tagline: ["B.Tech CSE · GGSIPU ’28", "Director & COO · Nexera", "Backend · Systems"],
+  tagline: ["B.Tech CSE · GGSIPU ’28", "Director & COO · Nexera", "Backend · Systems · AI"],
   /** The hero line. Kept modest: a student who runs things and builds things. */
   headline: "I like understanding how systems work, and then building them.",
   subline: "Backends, APIs and the infrastructure underneath. I study CSE at GGSIPU, and I’m part of the team at Nexera.",
@@ -21,7 +21,7 @@ export const about = {
   lead: "I’m Arun. I like getting to the core of a system: how it’s designed, where it breaks, and what holds it up.",
   paragraphs: [
     "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and I build parts of the platform myself.",
-    "Outside Nexera I build with a small team: the backend for OKEANOS and NETWM at Smart India Hackathon 2026, the game and quiz experience for FinStar, and the frontend for Onyx.",
+    "Beyond Nexera, I built the backend for OKEANOS and NETWM at Smart India Hackathon 2026, the game and quiz experience for FinStar, and the frontend for Onyx.",
   ],
   facts: [
     { label: "Based in", value: "New Delhi, India" },
