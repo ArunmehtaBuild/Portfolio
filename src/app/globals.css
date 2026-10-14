@@ -55,6 +55,23 @@
   --bg: #0e0b1c; --fg: #ece9ff; --muted: #a7a2c8; --line: #241e3f; --accent: #a998ff; --card: #151129;
 }
 
+[data-tone="rose"] {
+  --bg: #1a0d11; --fg: #f7e8e5; --muted: #c9a7a3; --line: #3b2128; --accent: #ff9480; --card: #231319;
+}
+
+/* Lets an element (not just the page) cross-fade when its tone changes. */
+.tone-fade {
+  background-color: var(--bg);
+  color: var(--fg);
+  transition:
+    --bg 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --fg 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --muted 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --line 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --accent 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --card 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-fg: var(--fg);
@@ -65,6 +82,7 @@
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Code", monospace;
+  --font-hindi: "AMS Adiyogi", var(--font-yatra), "Nirmala UI", serif;
 }
 
 html {
@@ -102,7 +120,7 @@ body {
 .wide {
   font-family: var(--font-sans);
   font-stretch: 125%;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
