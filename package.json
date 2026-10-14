@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "check:facts": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-facts.mts",
+    "prebuild": "npm run check:facts",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "release:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-facts.mts --strict && npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
     "next": "16.4.0",
