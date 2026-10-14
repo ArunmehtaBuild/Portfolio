@@ -1,7 +1,6 @@
 import { stops } from "@/data/atlas";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
-import { Greeting } from "./Greeting";
 import { Portrait } from "./Portrait";
 import { RouteRibbon } from "./RouteRibbon";
 
@@ -15,11 +14,6 @@ export function Hero() {
   return (
     <section id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
       <div aria-hidden="true" className="chart-grid pointer-events-none absolute inset-0 -z-10" />
-
-      {/* Oversized gold greeting, centred over everything */}
-      <div className="flex justify-center px-5 pt-24 sm:pt-28">
-        <Greeting />
-      </div>
 
       <div className="mx-auto grid max-w-7xl content-center gap-12 px-5 pt-6 pb-14 sm:px-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_27rem]">
         <div className="flex flex-col justify-center">
