@@ -12,11 +12,17 @@ export function Contact() {
     <section id="contact" data-stop="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 sm:px-8 sm:pt-32">
           <p className="label flex items-center gap-3">
+            <span className="text-accent">05</span>
             <span className="inline-block h-px w-10 bg-accent" />
-            05 · Contact
+            Contact
           </p>
-          <h2 id="contact-title" className="mt-8 max-w-[18ch] text-[clamp(2.4rem,6vw,5rem)] leading-[1] font-semibold tracking-[-0.03em]">
-            <SplitWords text="Open to internships, collaborations and hard problems." />
+          <h2 id="contact-title" className="mt-8 max-w-[56rem] leading-[0.98]">
+            <span className="block font-serif text-[clamp(2.2rem,5vw,4.2rem)] text-accent italic">
+              <SplitWords text="Open to internships, collaborations" />
+            </span>
+            <span className="wide mt-2 block text-[clamp(2.2rem,5.4vw,4.6rem)]">
+              <SplitWords text="and hard problems." delay={0.15} />
+            </span>
           </h2>
 
           <FadeUp delay={0.2} className="mt-12">
