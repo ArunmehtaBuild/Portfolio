@@ -1,4 +1,5 @@
 import { about, offTheMap } from "@/data/profile";
+import { Portrait } from "../hero/Portrait";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 import { SectionHead } from "./SectionHead";
 
@@ -30,6 +31,9 @@ export function About() {
         </div>
 
         <div className="space-y-10 lg:col-span-5">
+          <div className="mx-auto max-w-[20rem] lg:mx-0 lg:max-w-[22rem]">
+            <Portrait />
+          </div>
           <FadeUp as="div">
             <dl className="divide-y divide-line border-y border-line">
               {about.facts.map((fact) => (
