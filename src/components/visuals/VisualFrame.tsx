@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 export function VisualFrame({ fig, caption, children }: { fig: number; caption: string; children: ReactNode }) {
   return (
     <figure className="relative overflow-hidden rounded-2xl border border-line bg-card">
-      <div className="flex items-center justify-between border-b border-line px-5 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-3">
         <span className="label">
           Fig. {String(fig).padStart(2, "0")} · {caption}
         </span>
