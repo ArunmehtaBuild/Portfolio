@@ -3,14 +3,16 @@
 My portfolio, built as a map of the problems I've worked on, from subsurface ocean heat to network attacks,
 and the one I haven't found yet.
 
-Each section follows the same pattern: **the problem → why it matters → what the team built → what I did → evidence.**
+As you scroll, the whole page cross-fades into each region's palette. Each section follows the same pattern: **the problem → why it matters → what the team built → what I did → evidence.**
 Team results are always labelled as team results, and my own work sits in its own block.
 
 ## Stack
 
 - [Next.js 16](https://nextjs.org) (App Router, Cache Components), fully static
 - TypeScript, Tailwind CSS v4
-- Newsreader and IBM Plex Mono via `next/font`
+- [Motion](https://motion.dev) for reveals, scroll-linked transforms and layout animation
+- [Lenis](https://lenis.darkroom.engineering) for smooth scrolling (off for reduced motion)
+- Archivo, Instrument Serif and IBM Plex Mono via `next/font`
 - Deployed on Vercel
 
 ## Run it
@@ -38,8 +40,13 @@ npm run dev
 ## Structure
 
 ```
-src/app/          layout, page, Open Graph image, sitemap, robots, icon
-src/components/   Hero, NexeraRegion, ProjectRegion, AtlasMap, Milestones, Unmapped, Contact, ...
-src/data/         profile, nexera, regions, milestones, atlas stops, types
+src/app/              layout, page, 404, Open Graph image, sitemap, robots, icon
+src/components/atlas  active-region provider, header, minimap, progress strip
+src/components/hero   hero, tilting portrait, route ribbon
+src/components/region chapter intros, project and Nexera regions, stats, work cards
+src/components/visuals one animated illustration per region
+src/components/sections milestones, unmapped region, Civic Setu, contact
+src/components/motion smooth scrolling and reveal primitives
+src/data/             profile, nexera, regions, milestones, atlas stops, types
 scripts/          check-facts.mts
 ```
