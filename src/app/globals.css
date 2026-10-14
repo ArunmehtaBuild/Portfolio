@@ -154,6 +154,12 @@ body {
   mask-image: radial-gradient(ellipse 60% 55% at 62% 42%, black 25%, transparent 78%);
 }
 
+/* The custom cursor replaces the system one only once it has started tracking a mouse. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
 /* Lenis smooth scrolling. */
 html.lenis,
 html.lenis body {

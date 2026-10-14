@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { Cursor } from "@/components/motion/Cursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -62,6 +63,7 @@ export default function RootLayout({ children, modal }: LayoutProps<"/">) {
           {children}
           {modal}
         </SmoothScroll>
+        <Cursor />
       </body>
     </html>
   );
