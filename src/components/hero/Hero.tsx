@@ -8,8 +8,8 @@ import { FadeUp, SplitWords } from "../motion/Reveal";
 // pawn owns the right half, and a single row under a hairline holds the line about the work,
 // the buttons and three quick facts. Nothing else, so the first screen stays calm.
 export function Hero() {
-  // Fade out by window scroll in pixels: the hero is always the top of the page, and a
-  // target-based progress could start part-way faded and wash the name out at rest.
+  // The name fades out by window scroll in pixels (the hero is always the top of the page).
+  // The buttons and facts below stay crisp so they can still be read and used.
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [40, 520], [1, 0]);
   const y = useTransform(scrollY, [0, 560], [0, -90]);
@@ -29,10 +29,7 @@ export function Hero() {
 
   return (
     <section id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
-      <motion.div
-        style={{ opacity, y, filter }}
-        className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-5 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-10"
-      >
+      <div className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-5 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-10">
         {/* Landscape screens: the board fades into the page above the hairline, so the details
             sit on clean ground, like a caption under the picture. */}
         <div aria-hidden="true" className="hero-fade-bottom pointer-events-none absolute inset-x-[-50vw] bottom-0 -z-10" />
@@ -41,7 +38,7 @@ export function Hero() {
 
         {/* The name sits low, just above the hairline, so name and board fill the top three
             quarters of the screen and the details sit below. */}
-        <div className="flex flex-1 flex-col justify-end pt-10 pb-10 sm:pb-12">
+        <motion.div style={{ opacity, y, filter }} className="flex flex-1 flex-col justify-end pt-10 pb-10 sm:pb-12">
           <div className="relative">
             {/* Portrait screens: the board fades out just above the text. */}
             <div aria-hidden="true" className="hero-fade-text pointer-events-none absolute inset-x-[-50vw] -top-20 -z-10 h-[200vh]" />
@@ -76,7 +73,7 @@ export function Hero() {
               </span>
             </h1>
           </div>
-        </div>
+        </motion.div>
 
         {/* One row under a hairline: the line about the work and the buttons, then the facts */}
         <FadeUp immediate delay={0.75} className="border-t border-line pt-7 sm:pt-8">
@@ -115,7 +112,7 @@ export function Hero() {
             </dl>
           </div>
         </FadeUp>
-      </motion.div>
+      </div>
     </section>
   );
 }
