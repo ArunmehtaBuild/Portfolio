@@ -153,7 +153,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
   const gold = useGold();
   const terrazzo = useMemo(() => [stoneTexture(1), stoneTexture(2), stoneTexture(3)], []);
 
-  useFrame(({ camera }, dt) => {
+  useFrame(({ camera, size }, dt) => {
     const { from, to, t } = pose();
     const a = squareToWorld(from.square);
     const b = squareToWorld(to.square);
@@ -199,10 +199,14 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     // The camera keeps pace with the piece, so a mid-air move never swings it into the text.
     look.current.set(damp(look.current.x, tx, 5, dt), damp(look.current.y, ty, 5, dt), damp(look.current.z, tz, 5, dt));
     const zoom = mobile ? lerp(from.phone ?? 1.35, to.phone ?? 1.35, t) : 1;
-    camera.position.x = damp(camera.position.x, tx + lerp(from.camera[0], to.camera[0], t) * zoom, 5, dt);
+    // Narrower-than-usual windows (a smaller browser, or zoomed out on a small laptop): pull
+    // the camera back so the piece keeps the same share of the screen width and never
+    // slides off the right edge.
+    const fit = mobile ? 1 : Math.max(1, 1.6 / (size.width / size.height));
+    camera.position.x = damp(camera.position.x, tx + lerp(from.camera[0], to.camera[0], t) * zoom * fit, 5, dt);
     const raise = mobile ? lerp(from.phoneLift ?? 0, to.phoneLift ?? 0, t) : 0;
-    camera.position.y = damp(camera.position.y, ty + lerp(from.camera[1], to.camera[1], t) + raise, 5, dt);
-    camera.position.z = damp(camera.position.z, tz + lerp(from.camera[2], to.camera[2], t) * zoom, 5, dt);
+    camera.position.y = damp(camera.position.y, ty + lerp(from.camera[1], to.camera[1], t) * fit + raise, 5, dt);
+    camera.position.z = damp(camera.position.z, tz + lerp(from.camera[2], to.camera[2], t) * zoom * fit, 5, dt);
     camera.lookAt(look.current);
 
     const ivory = document.documentElement.dataset.tone === "ivory";
