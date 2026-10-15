@@ -22,9 +22,13 @@ export function Contact() {
               <SplitWords text="Open to internships, collaborations" />
             </span>
             {/* The close types itself out, like a line being written at a terminal. */}
-            <span className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-              <span className="font-serif text-[clamp(2.2rem,5vw,4.2rem)] italic">and</span>
-              <Typewriter text="real contributions." className="font-mono text-[clamp(1.5rem,3.6vw,3.1rem)] font-medium tracking-[-0.02em]" />
+            <span className="mt-2 block">
+              <span className="font-serif text-[clamp(2.2rem,5vw,4.2rem)] italic">and </span>
+              <Typewriter
+                text={`real
+contributions.`}
+                className="font-[family-name:var(--font-typewriter)] text-[clamp(2.1rem,4.8vw,4rem)] leading-[1.1] whitespace-pre-line"
+              />
             </span>
           </h2>
 

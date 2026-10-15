@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Fraunces, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { Archivo, Fraunces, IBM_Plex_Mono, Instrument_Serif, Special_Elite } from "next/font/google";
 import { Cursor } from "@/components/motion/Cursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
@@ -34,6 +34,13 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
+// Special Elite: an inked, slightly uneven typewriter face for typed-out lines.
+const typewriter = Special_Elite({
+  variable: "--font-typewriter",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 const description =
   "Builder and operator. Director & COO at Nexera, B.Tech CSE at GGSIPU. A map of the problems I’ve worked on, from ocean heat to network attacks, and the one I haven’t found yet.";
 
@@ -58,7 +65,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${fraunces.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${fraunces.variable} ${typewriter.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>
