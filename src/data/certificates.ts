@@ -1,13 +1,13 @@
 import type { Source } from "./types";
 
-// Certificates shown in the moving strip under Milestones.
+// Certificate photos shown in the moving strip under Milestones. Only entries with an
+// image appear; the title and note are used as the image description, not shown.
 //
 // To add one: put the image (JPG, PNG or WebP, landscape works best) in
-// public/certificates/ and set `image` to its file name. Until an image is there, the card
-// shows a framed placeholder with the title and note.
+// public/certificates/ and set `image` to its file name.
 export interface Certificate {
   title: string;
-  /** Short line under the title: the result, or who issued it. */
+  /** The result, or who issued it (part of the image description). */
   note: string;
   /** File name inside public/certificates/, e.g. "t-hacks-8.jpg". */
   image?: string;

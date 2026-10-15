@@ -161,17 +161,13 @@ body {
   text-transform: uppercase;
 }
 
-/* Certificates: the strip drifts left forever (the list is rendered twice, so -50% is one
-   full lap) and pauses on hover or keyboard focus. Edges fade into the page. */
+/* Certificates: the strip drifts left forever (the lap is rendered twice, so -50% is one
+   full lap). Edges fade into the page. */
 .cert-strip {
   mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
 }
 .cert-track {
   animation: cert-marquee 45s linear infinite;
-}
-.cert-strip:hover .cert-track,
-.cert-strip:focus-within .cert-track {
-  animation-play-state: paused;
 }
 @keyframes cert-marquee {
   to { transform: translateX(-50%); }
