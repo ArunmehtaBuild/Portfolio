@@ -41,14 +41,26 @@ export function Hero() {
             ))}
           </FadeUp>
 
-          {/* The name in the page's serif: "Arun" in ink, "Mehta" in italic gold cast like the
-              piece on the board, stepped in so the name walks toward the centre. */}
+          {/* The name in the page's serif, stepped in so it walks toward the centre. */}
           <h1 id="origin-title" className="mt-5 font-serif leading-[0.86] tracking-[-0.035em] sm:mt-7">
             <span className="block text-[clamp(5.4rem,14.5vw,13.5rem)]">
               <SplitWords text="Arun" immediate delay={0.2} />
             </span>
-            <span className="gold-ink block pl-[0.62em] text-[clamp(5.4rem,14.5vw,13.5rem)] italic">
-              <SplitWords text="Mehta" immediate delay={0.4} />
+            {/* "Mehta" sits on an ink block, like a dark square on the board, in cast gold. */}
+            <span className="mt-[0.06em] block pl-[0.5em] text-[clamp(5.4rem,14.5vw,13.5rem)] italic">
+              <span className="relative inline-block px-[0.2em] pt-[0.04em] pb-[0.02em]">
+                <motion.span
+                  aria-hidden="true"
+                  data-reveal=""
+                  className="absolute inset-0 origin-left bg-[#14171b]"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                />
+                <span className="gold-ink relative">
+                  <SplitWords text="Mehta" immediate delay={0.55} />
+                </span>
+              </span>
             </span>
           </h1>
         </div>
