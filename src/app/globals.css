@@ -236,6 +236,25 @@ body {
   }
 }
 
+.scene-scrim-about {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  background: color-mix(in oklab, var(--bg) 96%, transparent);
+}
+@media (min-width: 768px) and (min-aspect-ratio: 1/1) {
+  .scene-scrim-about {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--bg) 97%, transparent) 0%,
+      color-mix(in oklab, var(--bg) 95%, transparent) 56%,
+      transparent 74%
+    );
+  }
+}
+html[data-stop="about"] .scene-scrim-about {
+  opacity: 1;
+}
+
 .scene-vignette {
   background: radial-gradient(ellipse at 70% 45%, transparent 35%, color-mix(in oklab, var(--bg) 60%, transparent) 85%);
 }

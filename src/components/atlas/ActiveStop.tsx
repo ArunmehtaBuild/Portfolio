@@ -37,6 +37,8 @@ export function ActiveStopProvider({ stops, children }: { stops: Stop[]; childre
 
   useEffect(() => {
     document.documentElement.dataset.tone = stops.find((s) => s.id === active)?.tone ?? "ivory";
+    // The 3D backdrop reads this to adjust its scrims per section.
+    document.documentElement.dataset.stop = active;
   }, [active, stops]);
 
   const index = Math.max(0, stops.findIndex((s) => s.id === active));
