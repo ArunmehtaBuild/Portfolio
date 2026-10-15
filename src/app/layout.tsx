@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
-import localFont from "next/font/local";
+import { Archivo, Fraunces, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import { Cursor } from "@/components/motion/Cursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
@@ -28,12 +27,11 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-// Fighter Attack (Letterara, free for personal use): a brush script for "Arun" in the hero.
-// Subset to the name's letters only, so it costs about 17 KB.
-const fighter = localFont({
-  src: "./fonts/fighter-attack-arun.woff",
-  variable: "--font-fighter",
-  display: "swap",
+// Fraunces at its heaviest, display optical size: the hero name.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  axes: ["opsz", "SOFT"],
 });
 
 const description =
@@ -55,12 +53,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3eee4",
+  themeColor: "#f5e6cc",
 };
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${fighter.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${fraunces.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>

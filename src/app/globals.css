@@ -35,7 +35,7 @@
    they give just that element its palette. fg and muted pass WCAG AA on bg in every tone. */
 /* Ivory: the light, premium opening (hero and about). Deep gold accent echoes the pieces. */
 [data-tone="ivory"] {
-  --bg: #f3eee4; --fg: #14171b; --muted: #5a5f66; --line: #e0d8c9; --accent: #7d5a0b; --card: #fbf8f2;
+  --bg: #f5e6cc; --fg: #16120c; --muted: #6b5c47; --line: #e2cba6; --accent: #8a6112; --card: #fbf1e0;
   color-scheme: light;
 }
 [data-tone="ink"] {
@@ -120,24 +120,45 @@ body {
   color: var(--muted);
 }
 
-/* Polished gold lettering that matches the chess piece: a cast-metal gradient with a
-   slow sheen that crosses once after the name arrives. */
-.gold-ink [data-reveal] {
+/* A polished gold plate behind the surname, cast like the pawn on the board. A soft sheen
+   crosses it once after it lands. */
+.gold-plate {
   background-image:
-    linear-gradient(105deg, transparent 40%, rgb(255 246 214 / 0.85) 50%, transparent 60%),
-    linear-gradient(176deg, #e7c25e 0%, #c2902c 34%, #8c6212 52%, #b4832a 68%, #e3bf63 100%);
-  background-size: 250% 100%, 100% 100%;
+    linear-gradient(105deg, transparent 38%, rgb(255 247 222 / 0.7) 50%, transparent 62%),
+    linear-gradient(180deg, #f1cf76 0%, #d9a843 42%, #b5852a 58%, #e2b85a 100%);
+  background-size: 260% 100%, 100% 100%;
   background-position: 120% 0, 0 0;
   background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding-right: 0.08em; /* keep the italic's last stroke inside the clip */
-  animation: gold-sheen 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.5s 1 both;
+  animation: gold-sheen 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.4s 1 both;
 }
 @keyframes gold-sheen {
   from { background-position: 120% 0, 0 0; }
   to { background-position: -20% 0, 0 0; }
+}
+
+/* Hero layout around the 3D board. Portrait screens (phones, upright tablets) get a stage
+   for the pawn at the top and fade the board out just above the text; landscape screens
+   keep the pawn beside the name and fade the board out above the bottom row. Matches the
+   scene's own phone framing (portrait or narrower than 768px). */
+.hero-stage { height: 30svh; flex: none; }
+.hero-fade-text { background: linear-gradient(to bottom, transparent, var(--bg) 4.5rem); }
+.hero-fade-bottom { display: none; }
+@media (min-width: 768px) and (min-aspect-ratio: 1/1) {
+  .hero-stage, .hero-fade-text { display: none; }
+  .hero-fade-bottom {
+    display: block;
+    height: 36%;
+    background: linear-gradient(to bottom, transparent, var(--bg) 46%);
+  }
+}
+
+/* The hero name: Fraunces Black at display size, softened a little. */
+.name-display {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 900;
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
 }
 
 /* Wide display caps (Archivo's width axis). */
@@ -192,20 +213,33 @@ body {
     );
   }
 }
+/* In the light opening the dark board stays beside the name, never behind it. Phones keep
+   the top of the screen clear for the board and pawn. Media queries match the scene's
+   phone framing. */
+[data-tone="ivory"] .scene-scrim {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 34%,
+    color-mix(in oklab, var(--bg) 94%, transparent) 46%,
+    color-mix(in oklab, var(--bg) 96%, transparent) 100%
+  );
+}
+@media (min-width: 768px) and (min-aspect-ratio: 1/1) {
+  [data-tone="ivory"] .scene-scrim {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--bg) 97%, transparent) 0%,
+      color-mix(in oklab, var(--bg) 94%, transparent) 44%,
+      transparent 62%
+    );
+  }
+}
+
 .scene-vignette {
   background: radial-gradient(ellipse at 70% 45%, transparent 35%, color-mix(in oklab, var(--bg) 60%, transparent) 85%);
 }
 
-/* Hero grid: thin lines with a dot at every crossing, fading out toward the edges. */
-.dot-grid {
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--fg) 45%, transparent) 1.2px, transparent 1.6px),
-    linear-gradient(to right, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px);
-  background-size: 96px 96px;
-  background-position: -0.5px -0.5px, 0 0, 0 0;
-  mask-image: radial-gradient(ellipse 60% 55% at 62% 42%, black 25%, transparent 78%);
-}
 
 /* The custom cursor replaces the system one only once it has started tracking a mouse. */
 html.has-cursor,
