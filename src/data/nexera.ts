@@ -61,7 +61,7 @@ export const nexera = {
   ],
 
   stats: [
-    { value: "3,500+", label: "students enrolled in exam-focused courses", source: site(", confirmed by Arun") },
+    { value: "3,500+", label: "students enrolled in exam-focused premium courses", source: site(", confirmed by Arun") },
     { value: "9.8K+", label: "members in the WhatsApp community", source: site("") },
     {
       value: "3.5K+",
@@ -79,15 +79,15 @@ export const nexera = {
     },
     {
       heading: "Super-admin panel",
-      text: "It had almost nothing in it. I re-architected it into a tabbed dashboard (revenue, user creation, password resets, access control), with revenue analytics split by SkillX and IPUNEX, course-by-course sales, date and month filters, and the backend endpoint behind it. The team can now see which courses are working.",
+      text: "I rebuilt it as a tabbed dashboard for revenue, user creation, password resets and access control, with revenue split by SkillX and IPUNEX, course-by-course sales, date filters and the backend endpoint behind it. The team can now see which courses are working.",
     },
     {
-      heading: "Login and signup",
-      text: "I worked on the login and signup screens.",
+      heading: "Sign-in and sign-up",
+      text: "I worked on the sign-in and sign-up flow, the first screens every student meets on the platform.",
     },
     {
       heading: "Content delivery and infrastructure",
-      text: "I manage how lectures and paid notes are delivered through Bunny, and I work on Redis (Upstash).",
+      text: "I manage how lectures and paid notes are delivered through Bunny, along with the rest of the setup that gets content to students smoothly.",
     },
   ],
 
