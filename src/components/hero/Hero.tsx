@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 
-// Hero: one full screen, edge to edge. The name fills the upper left, the 3D board owns the
+// Hero: one full screen on the page's centred grid. The name fills the upper left, the 3D board owns the
 // right half, and a single row under a hairline holds the line about the work, the buttons
 // and three quick facts. Nothing else, so the first screen stays calm.
 export function Hero() {
@@ -29,7 +29,7 @@ export function Hero() {
 
   return (
     <section ref={ref} id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
-      <motion.div style={{ opacity, y, filter }} className="mx-auto w-full max-w-[110rem] px-5 sm:px-10 lg:px-14 flex min-h-[100svh] flex-col pt-24 pb-8 sm:pt-28 sm:pb-10">
+      <motion.div style={{ opacity, y, filter }} className="mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-5 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-10">
         {/* The name, centred in the space above the bottom row */}
         <div className="flex flex-1 flex-col justify-center py-8">
           <FadeUp immediate className="flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -41,11 +41,13 @@ export function Hero() {
             ))}
           </FadeUp>
 
-          <h1 id="origin-title" className="mt-6 leading-[0.82] sm:mt-8">
-            <span className="block font-serif text-[clamp(5rem,13.5vw,14rem)] italic tracking-[-0.03em]">
+          {/* The name in the page's serif: "Arun" in ink, "Mehta" in italic gold cast like the
+              piece on the board, stepped in so the name walks toward the centre. */}
+          <h1 id="origin-title" className="mt-5 font-serif leading-[0.86] tracking-[-0.035em] sm:mt-7">
+            <span className="block text-[clamp(5.4rem,14.5vw,13.5rem)]">
               <SplitWords text="Arun" immediate delay={0.2} />
             </span>
-            <span className="wide block text-[clamp(3.6rem,10.8vw,11.5rem)] tracking-[-0.01em] text-accent">
+            <span className="gold-ink block pl-[0.62em] text-[clamp(5.4rem,14.5vw,13.5rem)] italic">
               <SplitWords text="Mehta" immediate delay={0.4} />
             </span>
           </h1>
