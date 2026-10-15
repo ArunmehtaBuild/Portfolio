@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { Bishop, Knight, Pawn, Queen, useGold } from "./pieces";
-import { boardTexture, stoneTexture } from "./textures";
+import { boardTexture, contactShadowTexture, stoneTexture } from "./textures";
 
 /**
  * A gold chess piece travels across a terrazzo board as you scroll the home page:
@@ -140,6 +140,8 @@ function Studio() {
 
 function World({ order, mobile }: { order: string[]; mobile: boolean }) {
   const piece = useRef<THREE.Group>(null!);
+  const shadow = useRef<THREE.Mesh>(null!);
+  const shadowMap = useMemo(() => contactShadowTexture(), []);
   const kinds = useRef<Record<PieceKind, THREE.Group | null>>({ pawn: null, knight: null, bishop: null, queen: null });
   const stones = useRef<THREE.Group>(null!);
   const key = useRef<THREE.SpotLight>(null!);
@@ -173,6 +175,12 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     spin.current += dt;
     g.rotation.y = Math.sin(spin.current * 0.35) * 0.28;
     g.scale.setScalar(damp(g.scale.x, mobile ? 0.42 : 0.8, 4, dt));
+    // A soft shadow under the foot so every piece sits on the board; it shrinks and fades
+    // while the piece is in the air.
+    const height = g.position.y - BOARD_TOP;
+    shadow.current.position.set(g.position.x, BOARD_TOP + 0.004, g.position.z);
+    shadow.current.scale.setScalar(g.scale.x * (1.9 - Math.min(height, 1) * 0.6));
+    (shadow.current.material as THREE.MeshBasicMaterial).opacity = 0.75 * Math.max(0, 1 - height * 0.9);
 
     // Swap pieces mid-move: the old one spins down as the new one spins up.
     const swap = smooth(clamp01((t - 0.35) / 0.3));
@@ -246,6 +254,10 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
       <directionalLight ref={rim} position={[6, 3, -5]} intensity={2} color="#8fb7ff" />
 
       <Board />
+      <mesh ref={shadow} rotation-x={-Math.PI / 2} renderOrder={1}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial map={shadowMap} transparent depthWrite={false} opacity={0.75} />
+      </mesh>
 
       {/* The travelling piece: all four live here; only the active one has scale */}
       <group ref={piece} position={start}>
