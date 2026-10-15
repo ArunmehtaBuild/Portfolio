@@ -30,7 +30,7 @@ function lathe(points: [number, number][]) {
 
 export function useGold() {
   return useMemo(
-    () => new THREE.MeshStandardMaterial({ color: "#ffc451", metalness: 0.92, roughness: 0.26, envMapIntensity: 1.25 }),
+    () => new THREE.MeshStandardMaterial({ color: "#e0a53e", metalness: 0.92, roughness: 0.28, envMapIntensity: 1.05 }),
     [],
   );
 }
