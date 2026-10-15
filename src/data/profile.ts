@@ -21,13 +21,14 @@ export const about = {
   lead: "I’m Arun. I like getting to the core of a system: how it’s designed, where it breaks, and what holds it up.",
   paragraphs: [
     "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and I build parts of the platform myself.",
-    "Beyond Nexera, I built the backend for OKEANOS and NETWM at Smart India Hackathon 2026, the game and quiz experience for FinStar, and the frontend for Onyx.",
+    "Beyond Nexera, I’ve worked on products across ocean science, cybersecurity, fintech and civic tech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, taking machine-learning models and serving them through APIs that hold up under real use.",
+    "Most of my work sits where backend, systems and AI meet: the services, data paths and infrastructure that let a model or a product run for real. I’m a third-year CSE student in Delhi, and I’d rather ship something small that works than plan something big that doesn’t.",
   ],
   facts: [
     { label: "Based in", value: "New Delhi, India" },
     { label: "Currently", value: "Director & COO @ Nexera" },
     { label: "Studying", value: "B.Tech CSE, GGSIPU · 2024–2028" },
-    { label: "Focus", value: "Backend and system design" },
+    { label: "Focus", value: "Backend, system design and AI" },
   ],
   /** The "unmapped region", now one honest line instead of a whole section. */
   exploring:

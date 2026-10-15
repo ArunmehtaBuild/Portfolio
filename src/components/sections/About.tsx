@@ -3,7 +3,7 @@ import { Portrait } from "../hero/Portrait";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 import { SectionHead } from "./SectionHead";
 
-// Who Arun is in one screen: a lead line, two short paragraphs, quick facts,
+// Who Arun is in one screen: a lead line, a few short paragraphs, quick facts,
 // and what's next.
 export function About() {
   return (
