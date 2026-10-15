@@ -21,7 +21,7 @@ export const about = {
   lead: "I’m Arun. I take systems apart so I can build better ones.",
   paragraphs: [
     "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and build parts of the platform myself.",
-    "Beyond Nexera, I’ve worked across ocean science, cybersecurity, fintech and civic tech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, serving machine-learning models through APIs that hold up under real use.",
+    "Beyond Nexera, I’ve worked across ML, ocean science, cybersecurity and fintech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, serving machine-learning models through APIs that hold up under real use.",
     "My work sits where backend, systems and AI meet. I’m a third-year CSE student in Delhi, and I’d rather ship something small that works than plan something big that doesn’t.",
   ],
   facts: [
