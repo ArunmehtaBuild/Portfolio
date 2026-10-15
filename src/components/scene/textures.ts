@@ -35,12 +35,8 @@ export function stoneTexture(seed = 1): THREE.CanvasTexture {
   return texture;
 }
 
-/**
- * An 8×8 board in two tones of terrazzo, speckled across both, for the chessboard slab.
- * "dark" is the night board; "light" is cream marble for the ivory opening.
- */
-export function boardTexture(variant: "dark" | "light" = "dark"): THREE.CanvasTexture {
-  const light = variant === "light";
+/** An 8×8 board in two tones of terrazzo, speckled across both, for the chessboard slab. */
+export function boardTexture(): THREE.CanvasTexture {
   const size = 1024;
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = size;
@@ -50,19 +46,19 @@ export function boardTexture(variant: "dark" | "light" = "dark"): THREE.CanvasTe
   const cell = size / 8;
   for (let r = 0; r < 8; r++) {
     for (let c = 0; c < 8; c++) {
-      ctx.fillStyle = light ? ((r + c) % 2 ? "#d8cfbf" : "#f4efe6") : (r + c) % 2 ? "#101115" : "#2a2c33";
+      ctx.fillStyle = (r + c) % 2 ? "#101115" : "#2a2c33";
       ctx.fillRect(c * cell, r * cell, cell, cell);
     }
   }
   for (let i = 0; i < 4200; i++) {
-    ctx.fillStyle = light ? `rgba(60, 54, 46, ${0.15 + rand() * 0.4})` : `rgba(225, 228, 232, ${0.25 + rand() * 0.55})`;
+    ctx.fillStyle = `rgba(225, 228, 232, ${0.25 + rand() * 0.55})`;
     const r = rand() < 0.93 ? 0.7 + rand() * 1 : 1.8 + rand() * 1.6;
     ctx.beginPath();
     ctx.arc(rand() * size, rand() * size, r, 0, Math.PI * 2);
     ctx.fill();
   }
   // A thin gold inlay around the playing area.
-  ctx.strokeStyle = light ? "rgba(150, 108, 20, 0.7)" : "rgba(240, 190, 80, 0.55)";
+  ctx.strokeStyle = "rgba(240, 190, 80, 0.55)";
   ctx.lineWidth = 6;
   ctx.strokeRect(3, 3, size - 6, size - 6);
   const texture = new THREE.CanvasTexture(canvas);

@@ -28,10 +28,14 @@ interface Pose {
   fogFar: number;
   /** Phones pull the camera back by this much (default 1.35) to keep the piece small. */
   phone?: number;
+  /** Phones raise the camera by this much, to look down on the board rather than at its edge. */
+  phoneLift?: number;
+  /** Phones aim here instead of the default top-right corner framing. */
+  phoneAim?: [number, number];
 }
 
 const POSES: Record<string, Pose> = {
-  origin: { piece: "pawn", square: [4, 2], camera: [-1, 1.5, 7.2], aim: [-1.85, 0.15], light: 1, fogFar: 26, phone: 1.8 },
+  origin: { piece: "pawn", square: [4, 2], camera: [-0.7, 1.2, 5.2], aim: [-1.3, 0.05], light: 1, fogFar: 26, phone: 1.25, phoneLift: 2.4, phoneAim: [0, -1.8] },
   about: { piece: "pawn", square: [4, 4], camera: [-2.2, 2.3, 8], aim: [-1.7, 0.85], light: 0.8, fogFar: 22 },
   experience: { piece: "knight", square: [5, 6], camera: [-3, 3.1, 9], aim: [-2.55, -0.45], light: 0.62, fogFar: 20 },
   projects: { piece: "bishop", square: [2, 3], camera: [-3.4, 3.6, 7], aim: [-1.6, 0.6], light: 0.12, fogFar: 10 },
@@ -50,7 +54,7 @@ const squareToWorld = ([file, rank]: [number, number]) =>
   new THREE.Vector3(BOARD.x + (file - 3.5) * SQUARE, BOARD_TOP, BOARD.z + (4.5 - rank) * SQUARE);
 
 // Fog fades distant stone into the page background, so it follows the page's tone.
-const FOG_IVORY = new THREE.Color("#f3eee4");
+const FOG_IVORY = new THREE.Color("#f5e6cc");
 const FOG_DARK = new THREE.Color("#05080b");
 
 const lerp = THREE.MathUtils.lerp;
@@ -104,8 +108,7 @@ function Stone({ points, depth, position, rotation, map }: { points: [number, nu
 }
 
 function Board() {
-  const top = useMemo(() => boardTexture("dark"), []);
-  const marble = useMemo(() => boardTexture("light"), []);
+  const top = useMemo(() => boardTexture(), []);
   const side = useMemo(() => stoneTexture(4), []);
   const materials = useMemo(() => {
     const edge = new THREE.MeshStandardMaterial({ map: side, roughness: 0.9, color: "#c9ccd3" });
@@ -113,29 +116,10 @@ function Board() {
     // Box faces: +x, -x, +y (top), -y, +z, -z
     return [edge, edge, face, edge, edge, edge];
   }, [top, side]);
-  // The ivory board: a cream marble shell around the dark one that fades with the page tone.
-  const shell = useRef<THREE.Mesh>(null!);
-  const fade = useRef(1);
-  useFrame((_, dt) => {
-    const ivory = document.documentElement.dataset.tone === "ivory" ? 1 : 0;
-    fade.current = THREE.MathUtils.damp(fade.current, ivory, 3, dt);
-    for (const m of shell.current.material as THREE.Material[]) m.opacity = fade.current;
-    shell.current.visible = fade.current > 0.01;
-  });
   return (
     <group>
       <mesh position={BOARD} material={materials} receiveShadow castShadow>
         <boxGeometry args={[SQUARE * 8 + 0.3, 0.4, SQUARE * 8 + 0.3]} />
-      </mesh>
-      <mesh ref={shell} position={BOARD} receiveShadow>
-        <boxGeometry args={[SQUARE * 8 + 0.31, 0.404, SQUARE * 8 + 0.31]} />
-        {[0, 1, 2, 3, 4, 5].map((i) =>
-          i === 2 ? (
-            <meshStandardMaterial key={i} attach={`material-${i}`} map={marble} roughness={0.5} metalness={0.05} transparent />
-          ) : (
-            <meshStandardMaterial key={i} attach={`material-${i}`} color="#d8cdb9" roughness={0.75} transparent />
-          ),
-        )}
       </mesh>
     </group>
   );
@@ -205,7 +189,9 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     // Camera: aim beside the piece so it sits clear of the text column.
     // Phones: one column of text, so look well left of and below the piece, which puts it
     // small in the top-right corner, clear of the text.
-    const aim = mobile ? ([-1.15, -2.25] as const) : ([lerp(from.aim[0], to.aim[0], t), lerp(from.aim[1], to.aim[1], t)] as const);
+    const phoneAim = (p: Pose) => p.phoneAim ?? [-1.15, -2.25];
+    const [fa, ta] = mobile ? [phoneAim(from), phoneAim(to)] : [from.aim, to.aim];
+    const aim = [lerp(fa[0], ta[0], t), lerp(fa[1], ta[1], t)] as const;
     const tx = g.position.x + aim[0];
     // Aim at the (scaled) piece's middle so it keeps the same place on screen at any size.
     const ty = BOARD_TOP + (mobile ? 1 : 0.72) + aim[1];
@@ -214,7 +200,8 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     look.current.set(damp(look.current.x, tx, 5, dt), damp(look.current.y, ty, 5, dt), damp(look.current.z, tz, 5, dt));
     const zoom = mobile ? lerp(from.phone ?? 1.35, to.phone ?? 1.35, t) : 1;
     camera.position.x = damp(camera.position.x, tx + lerp(from.camera[0], to.camera[0], t) * zoom, 5, dt);
-    camera.position.y = damp(camera.position.y, ty + lerp(from.camera[1], to.camera[1], t), 5, dt);
+    const raise = mobile ? lerp(from.phoneLift ?? 0, to.phoneLift ?? 0, t) : 0;
+    camera.position.y = damp(camera.position.y, ty + lerp(from.camera[1], to.camera[1], t) + raise, 5, dt);
     camera.position.z = damp(camera.position.z, tz + lerp(from.camera[2], to.camera[2], t) * zoom, 5, dt);
     camera.lookAt(look.current);
 
@@ -238,7 +225,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
 
   return (
     <>
-      <fog ref={fog} attach="fog" args={["#f3eee4", 7, POSES.origin.fogFar]} />
+      <fog ref={fog} attach="fog" args={["#f5e6cc", 7, POSES.origin.fogFar]} />
       <Studio />
       <ambientLight ref={ambient} intensity={0.3} />
       <spotLight

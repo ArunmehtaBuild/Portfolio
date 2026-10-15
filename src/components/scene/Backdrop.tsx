@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import dynamic from "next/dynamic";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import type { Stop } from "@/data/atlas";
@@ -32,9 +32,6 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
   // WebGL can be missing or blocked; then flat gold silhouettes stand in so the page never breaks.
   const [lost, setLost] = useState(false);
   const supported = useSyncExternalStore(noSubscribe, webglAvailable, () => true);
-  // The dotted grid belongs to the hero: it sits behind the sphere and fades as you leave.
-  const { scrollY } = useScroll();
-  const gridOpacity = useTransform(scrollY, [0, 700], [1, 0]);
   return (
     <motion.div
       aria-hidden="true"
@@ -43,7 +40,6 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.6, delay: 0.2, ease: "easeOut" }}
     >
-      <motion.div style={{ opacity: gridOpacity }} className="dot-grid absolute inset-0" />
       {lost || !supported ? (
         <ChessFallback />
       ) : (
