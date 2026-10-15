@@ -26,10 +26,12 @@ interface Pose {
   aim: [number, number];
   light: number;
   fogFar: number;
+  /** Phones pull the camera back by this much (default 1.35) to keep the piece small. */
+  phone?: number;
 }
 
 const POSES: Record<string, Pose> = {
-  origin: { piece: "pawn", square: [4, 2], camera: [-1.2, 1.9, 9.6], aim: [-2.35, 0.55], light: 1, fogFar: 26 },
+  origin: { piece: "pawn", square: [4, 2], camera: [-1, 1.5, 7.2], aim: [-1.85, 0.15], light: 1, fogFar: 26, phone: 1.8 },
   about: { piece: "pawn", square: [4, 4], camera: [-2.2, 2.3, 8], aim: [-1.7, 0.85], light: 0.8, fogFar: 22 },
   experience: { piece: "knight", square: [5, 6], camera: [-3, 3.1, 9], aim: [-2.55, -0.45], light: 0.62, fogFar: 20 },
   projects: { piece: "bishop", square: [2, 3], camera: [-3.4, 3.6, 7], aim: [-1.6, 0.6], light: 0.12, fogFar: 10 },
@@ -96,7 +98,7 @@ function Stone({ points, depth, position, rotation, map }: { points: [number, nu
   }, [points, depth]);
   return (
     <mesh geometry={geometry} position={position} rotation={rotation} castShadow receiveShadow>
-      <meshStandardMaterial map={map} roughness={0.88} metalness={0.05} color="#d6d9e0" />
+      <meshStandardMaterial map={map} roughness={0.88} metalness={0.05} color="#d6d9e0" transparent />
     </mesh>
   );
 }
@@ -104,13 +106,6 @@ function Stone({ points, depth, position, rotation, map }: { points: [number, nu
 function Board() {
   const top = useMemo(() => boardTexture("dark"), []);
   const marble = useMemo(() => boardTexture("light"), []);
-  const cream = useRef<THREE.MeshStandardMaterial>(null!);
-  // The cream marble top sits just above the dark one and fades with the page tone.
-  useFrame((_, dt) => {
-    const ivory = document.documentElement.dataset.tone === "ivory" ? 1 : 0;
-    cream.current.opacity = THREE.MathUtils.damp(cream.current.opacity, ivory, 3, dt);
-    cream.current.visible = cream.current.opacity > 0.01;
-  });
   const side = useMemo(() => stoneTexture(4), []);
   const materials = useMemo(() => {
     const edge = new THREE.MeshStandardMaterial({ map: side, roughness: 0.9, color: "#c9ccd3" });
@@ -118,14 +113,29 @@ function Board() {
     // Box faces: +x, -x, +y (top), -y, +z, -z
     return [edge, edge, face, edge, edge, edge];
   }, [top, side]);
+  // The ivory board: a cream marble shell around the dark one that fades with the page tone.
+  const shell = useRef<THREE.Mesh>(null!);
+  const fade = useRef(1);
+  useFrame((_, dt) => {
+    const ivory = document.documentElement.dataset.tone === "ivory" ? 1 : 0;
+    fade.current = THREE.MathUtils.damp(fade.current, ivory, 3, dt);
+    for (const m of shell.current.material as THREE.Material[]) m.opacity = fade.current;
+    shell.current.visible = fade.current > 0.01;
+  });
   return (
     <group>
       <mesh position={BOARD} material={materials} receiveShadow castShadow>
         <boxGeometry args={[SQUARE * 8 + 0.3, 0.4, SQUARE * 8 + 0.3]} />
       </mesh>
-      <mesh position={[BOARD.x, BOARD_TOP + 0.002, BOARD.z]} rotation-x={-Math.PI / 2} receiveShadow>
-        <planeGeometry args={[SQUARE * 8 + 0.3, SQUARE * 8 + 0.3]} />
-        <meshStandardMaterial ref={cream} map={marble} roughness={0.5} metalness={0.05} transparent opacity={1} />
+      <mesh ref={shell} position={BOARD} receiveShadow>
+        <boxGeometry args={[SQUARE * 8 + 0.31, 0.404, SQUARE * 8 + 0.31]} />
+        {[0, 1, 2, 3, 4, 5].map((i) =>
+          i === 2 ? (
+            <meshStandardMaterial key={i} attach={`material-${i}`} map={marble} roughness={0.5} metalness={0.05} transparent />
+          ) : (
+            <meshStandardMaterial key={i} attach={`material-${i}`} color="#d8cdb9" roughness={0.75} transparent />
+          ),
+        )}
       </mesh>
     </group>
   );
@@ -154,6 +164,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
   const fog = useRef<THREE.Fog>(null!);
   const look = useRef(new THREE.Vector3());
   const spin = useRef(0);
+  const stoneFade = useRef(0);
   const pose = usePoseFromScroll(order);
   const gold = useGold();
   const terrazzo = useMemo(() => [stoneTexture(1), stoneTexture(2), stoneTexture(3)], []);
@@ -201,7 +212,7 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     const tz = g.position.z;
     // The camera keeps pace with the piece, so a mid-air move never swings it into the text.
     look.current.set(damp(look.current.x, tx, 5, dt), damp(look.current.y, ty, 5, dt), damp(look.current.z, tz, 5, dt));
-    const zoom = mobile ? 1.35 : 1;
+    const zoom = mobile ? lerp(from.phone ?? 1.35, to.phone ?? 1.35, t) : 1;
     camera.position.x = damp(camera.position.x, tx + lerp(from.camera[0], to.camera[0], t) * zoom, 5, dt);
     camera.position.y = damp(camera.position.y, ty + lerp(from.camera[1], to.camera[1], t), 5, dt);
     camera.position.z = damp(camera.position.z, tz + lerp(from.camera[2], to.camera[2], t) * zoom, 5, dt);
@@ -215,6 +226,12 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
     ambient.current.intensity = damp(ambient.current.intensity, (ivory ? 0.35 : 0.1) + 0.25 * light, 3, dt);
     fog.current.far = damp(fog.current.far, lerp(from.fogFar, to.fogFar, t), 2, dt);
     stones.current.rotation.y = damp(stones.current.rotation.y, t * 0.05, 2, dt);
+    // The angular stones belong to the dark scene; the ivory opening is just board and piece.
+    stoneFade.current = damp(stoneFade.current, ivory ? 0 : 1, 3, dt);
+    stones.current.visible = stoneFade.current > 0.01;
+    stones.current.traverse((o) => {
+      if (o instanceof THREE.Mesh) (o.material as THREE.Material).opacity = stoneFade.current;
+    });
   });
 
   const start = squareToWorld(POSES.origin.square);
@@ -267,7 +284,8 @@ function World({ order, mobile }: { order: string[]; mobile: boolean }) {
 }
 
 export default function ChessScene({ order, onLost }: { order: string[]; onLost: () => void }) {
-  const mobile = typeof window !== "undefined" && window.innerWidth < 768;
+  // Phones and portrait tablets share the one-column framing: piece small, top right.
+  const mobile = typeof window !== "undefined" && (window.innerWidth < 768 || window.innerWidth < window.innerHeight);
 
   return (
     <Canvas
