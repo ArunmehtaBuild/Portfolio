@@ -37,5 +37,5 @@ export const about = {
 
 export const offTheMap = [
   { heading: "Chess", text: "Over the board, for fun, and at offline chess events when I can." },
-  { heading: "Outdoors", text: "Volleyball, mountain trekking and hiking." },
+  { heading: "Outdoors", text: "Mountain trails, spontaneous adventures and a constant curiosity for what’s out there." },
 ];
