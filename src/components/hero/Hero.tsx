@@ -55,7 +55,7 @@ export function Hero() {
             </FadeUp>
 
             {/* One heavy face for both lines; the surname sits on a gold plate cast like the pawn. */}
-            <h1 id="origin-title" className="name-display mt-6 text-[clamp(3.6rem,10.2vw,9.6rem)] leading-[0.92] sm:mt-8">
+            <h1 id="origin-title" className="name-display mt-6 text-[clamp(3.8rem,10.8vw,10.4rem)] leading-[0.92] sm:mt-8">
               <span className="block">
                 <SplitWords text="Arun" immediate delay={0.2} />
               </span>
