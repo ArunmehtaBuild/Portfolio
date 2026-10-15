@@ -35,7 +35,7 @@ interface Pose {
 }
 
 const POSES: Record<string, Pose> = {
-  origin: { piece: "pawn", square: [4, 2], camera: [-0.7, 1.2, 5.2], aim: [-1.3, 0.05], light: 1, fogFar: 26, phone: 1.25, phoneLift: 2.4, phoneAim: [0, -1.8] },
+  origin: { piece: "pawn", square: [4, 2], camera: [-0.8, 1.3, 6.2], aim: [-1.55, 0.1], light: 1, fogFar: 26, phone: 1.25, phoneLift: 2.4, phoneAim: [0, -1.8] },
   about: { piece: "pawn", square: [4, 4], camera: [-2.2, 2.3, 8], aim: [-1.7, 0.85], light: 0.8, fogFar: 22 },
   experience: { piece: "knight", square: [5, 6], camera: [-3, 3.1, 9], aim: [-2.55, -0.45], light: 0.62, fogFar: 20 },
   projects: { piece: "bishop", square: [2, 3], camera: [-3.4, 3.6, 7], aim: [-1.6, 0.6], light: 0.12, fogFar: 10 },
