@@ -51,7 +51,7 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
           while the board stays bright on the right. Plus a soft vignette. */}
       <div className="scene-scrim absolute inset-0" />
       <div className="scene-vignette absolute inset-0" />
-      {/* About is light too: a panel hides the dark board while it is read. */}
+      {/* About is light too: a soft panel keeps the dark board from showing behind its text. */}
       <div className="scene-scrim-about absolute inset-0" />
     </motion.div>
   );
