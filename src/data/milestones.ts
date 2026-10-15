@@ -15,13 +15,14 @@ const teamWriteUp: Source = {
 };
 
 export const milestones: Milestone[] = [
-  { event: "IEEE T-Hacks 8.0", result: "2nd place", detail: "With FinStar.", source: arun("certificate") },
+  { event: "IEEE T-Hacks 8.0", result: "2nd place", detail: "With FinStar, among 200+ teams.", source: arun("certificate; team count confirmed 2026-10-15") },
   {
     event: "Shloka Decode 2.0, NSUT",
     result: "Winner",
     detail: "We had 8 hours to decode Sanskrit shlokas given live and build a website around them. I did the decoding and its code.",
     source: arun("certificate"),
   },
+  { event: "CodeVeda 2.0", result: "Finalist", detail: "Among 2,000+ participants.", source: arun("2026-10-15") },
   { event: "Bytecode, HackWithBVP 7.0", result: "4th position", detail: "With Onyx.", source: arun("2026-10-14") },
   { event: "VibeForge’26", result: "Winner", detail: "Team result.", source: teamWriteUp },
   { event: "Blueprint 2026, eDC IIT Delhi", result: "Selected for incubation", detail: "Team result.", source: teamWriteUp },
