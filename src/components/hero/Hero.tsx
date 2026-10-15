@@ -43,7 +43,7 @@ export function Hero() {
 
           {/* The name in the page's serif, stepped in so it walks toward the centre. */}
           <h1 id="origin-title" className="mt-5 font-serif leading-[0.86] tracking-[-0.035em] sm:mt-7">
-            <span className="block text-[clamp(5.4rem,14.5vw,13.5rem)]">
+            <span className="block pt-[0.42em] pb-[0.16em] font-[family-name:var(--font-fighter)] text-[clamp(4rem,9.6vw,9.4rem)] leading-[0.9] tracking-normal">
               <SplitWords text="Arun" immediate delay={0.2} />
             </span>
             {/* "Mehta" sits on an ink block, like a dark square on the board, in cast gold. */}
