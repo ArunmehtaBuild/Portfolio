@@ -1,3 +1,4 @@
+import * as motion from "motion/react-client";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 
@@ -20,9 +21,22 @@ export function Contact() {
             <span className="block font-serif text-[clamp(2.2rem,5vw,4.2rem)] text-accent italic">
               <SplitWords text="Open to internships, collaborations" />
             </span>
-            {/* The sentence continues in the same serif, upright and in ink, so it reads as one line of thought. */}
-            <span className="mt-1 block font-serif text-[clamp(2.2rem,5vw,4.2rem)]">
-              <SplitWords text="and real contributions." delay={0.15} />
+            {/* The close echoes the hero: "real contributions" sits on the same gold plate as the surname. */}
+            <span className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+              <span className="font-serif text-[clamp(2.2rem,5vw,4.2rem)] italic">and</span>
+              <span className="relative inline-block px-[0.18em] pt-[0.08em] pb-[0.02em]">
+                <motion.span
+                  aria-hidden="true"
+                  className="gold-plate absolute inset-0 origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                />
+                <span className="name-display relative text-[clamp(1.45rem,4.4vw,3.8rem)] leading-[1.05] text-[#16120c]">
+                  <SplitWords text="Real contributions." delay={0.4} />
+                </span>
+              </span>
             </span>
           </h2>
 
