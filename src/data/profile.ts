@@ -3,7 +3,7 @@ import type { Link } from "./types";
 export const profile = {
   name: "Arun Mehta",
   /** Chips under the name. */
-  tagline: ["B.Tech CSE · GGSIPU ’28", "Director & COO · Nexera", "Backend · Systems · AI"],
+  tagline: ["B.Tech CSE · GGSIPU ’28", "Backend · Systems · AI"],
   /** The hero line. Kept modest: a student who runs things and builds things. */
   headline: "I like understanding how systems work, and then building them.",
   subline: "Backends, APIs and the infrastructure underneath. I study CSE at GGSIPU, and I’m part of the team at Nexera.",
