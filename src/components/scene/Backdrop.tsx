@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { Stop } from "@/data/atlas";
 import { ChessFallback } from "./ChessFallback";
 import { SceneBoundary } from "./SceneBoundary";
@@ -30,7 +30,24 @@ const noSubscribe = () => () => {};
 export function Backdrop({ stops }: { stops: Stop[] }) {
   const order = useMemo(() => stops.map((s) => s.id), [stops]);
   // WebGL can be missing or blocked; then flat gold silhouettes stand in so the page never breaks.
+  // The GPU can also drop the context mid-visit (sleep, tab switches, driver resets). Then the
+  // silhouettes show briefly and the scene is rebuilt on a fresh canvas, a few times at most.
   const [lost, setLost] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    if (!lost || attempt >= 4) return;
+    const retry = () => {
+      if (document.visibilityState !== "visible") return;
+      setAttempt((a) => a + 1);
+      setLost(false);
+    };
+    const timer = window.setTimeout(retry, 1200);
+    document.addEventListener("visibilitychange", retry);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", retry);
+    };
+  }, [lost, attempt]);
   const supported = useSyncExternalStore(noSubscribe, webglAvailable, () => true);
   return (
     <motion.div
@@ -43,7 +60,7 @@ export function Backdrop({ stops }: { stops: Stop[] }) {
       {lost || !supported ? (
         <ChessFallback />
       ) : (
-        <SceneBoundary fallback={<ChessFallback />}>
+        <SceneBoundary key={attempt} fallback={<ChessFallback />}>
           <ChessScene order={order} onLost={() => setLost(true)} />
         </SceneBoundary>
       )}
