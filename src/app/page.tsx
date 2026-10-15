@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/atlas/SiteHeader";
 import { Hero } from "@/components/hero/Hero";
 import { Backdrop } from "@/components/scene/Backdrop";
 import { About } from "@/components/sections/About";
+import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
 import { Milestones } from "@/components/sections/Milestones";
@@ -47,6 +48,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <Milestones />
+        <Certificates />
         <OffTheBoard />
         <Contact />
       </main>
