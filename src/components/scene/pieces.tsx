@@ -23,9 +23,9 @@ const BASE: [number, number][] = [
 ];
 
 function lathe(points: [number, number][]) {
-  const g = new THREE.LatheGeometry(v(points), 64);
-  g.computeVertexNormals();
-  return g;
+  // LatheGeometry brings its own normals, matched across the seam; recomputing them
+  // would split the seam into a visible vertical line.
+  return new THREE.LatheGeometry(v(points), 64);
 }
 
 export function useGold() {
