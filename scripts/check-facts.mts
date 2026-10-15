@@ -6,6 +6,7 @@
 // never an internship, never call Arun CTO, never list the DTU B-Plan result.
 
 import { createHash } from "node:crypto";
+import { certificates } from "../src/data/certificates.ts";
 import { milestones } from "../src/data/milestones.ts";
 import { NEXERA_CHECKED_ON, nexera } from "../src/data/nexera.ts";
 import { about, offTheMap, profile } from "../src/data/profile.ts";
@@ -77,6 +78,7 @@ walk({ profile, about, offTheMap }, "profile");
 walk(nexera, "nexera");
 walk(regions, "regions");
 walk(milestones, "milestones");
+walk(certificates, "certificates");
 
 requireSources(nexera.stats, "nexera.stats");
 regions.forEach((r) => {
