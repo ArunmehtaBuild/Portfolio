@@ -18,11 +18,11 @@ export const profile = {
 };
 
 export const about = {
-  lead: "I’m Arun. I get to the core of how systems work, then build them.",
+  lead: "I’m Arun. I take systems apart so I can build better ones.",
   paragraphs: [
-    "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and I build parts of the platform myself.",
-    "Beyond Nexera, I’ve worked on products across ocean science, cybersecurity, fintech and civic tech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, taking machine-learning models and serving them through APIs that hold up under real use.",
-    "Most of my work sits where backend, systems and AI meet: the services, data paths and infrastructure that let a model or a product run for real. I’m a third-year CSE student in Delhi, and I’d rather ship something small that works than plan something big that doesn’t.",
+    "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and build parts of the platform myself.",
+    "Beyond Nexera, I’ve worked across ocean science, cybersecurity, fintech and civic tech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, serving machine-learning models through APIs that hold up under real use.",
+    "My work sits where backend, systems and AI meet. I’m a third-year CSE student in Delhi, and I’d rather ship something small that works than plan something big that doesn’t.",
   ],
   facts: [
     { label: "Based in", value: "New Delhi, India" },

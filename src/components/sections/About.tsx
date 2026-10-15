@@ -12,7 +12,7 @@ export function About() {
 
       <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
-          <p className="font-serif text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.12]">
+          <p className="font-serif text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.12] text-fg [-webkit-text-stroke:0.022em_currentColor]">
             <SplitWords text={about.lead} stagger={0.025} />
           </p>
           <FadeUp delay={0.15} className="mt-8 space-y-5 text-[1.08rem] leading-[1.7] text-muted">
