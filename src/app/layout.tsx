@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import localFont from "next/font/local";
 import { Cursor } from "@/components/motion/Cursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { siteUrl } from "@/lib/site";
@@ -27,6 +28,14 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+// Fighter Attack (Letterara, free for personal use): a brush script for "Arun" in the hero.
+// Subset to the name's letters only, so it costs about 17 KB.
+const fighter = localFont({
+  src: "./fonts/fighter-attack-arun.woff",
+  variable: "--font-fighter",
+  display: "swap",
+});
+
 const description =
   "Builder and operator. Director & COO at Nexera, B.Tech CSE at GGSIPU. A map of the problems I’ve worked on, from ocean heat to network attacks, and the one I haven’t found yet.";
 
@@ -51,7 +60,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" data-tone="ivory" className={`${archivo.variable} ${instrument.variable} ${plexMono.variable} ${fighter.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Without JS, reveal animations never run, so show everything in place. */}
         <noscript>
