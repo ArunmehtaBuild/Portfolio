@@ -120,6 +120,26 @@ body {
   color: var(--muted);
 }
 
+/* Polished gold lettering that matches the chess piece: a cast-metal gradient with a
+   slow sheen that crosses once after the name arrives. */
+.gold-ink [data-reveal] {
+  background-image:
+    linear-gradient(105deg, transparent 40%, rgb(255 246 214 / 0.85) 50%, transparent 60%),
+    linear-gradient(176deg, #e7c25e 0%, #c2902c 34%, #8c6212 52%, #b4832a 68%, #e3bf63 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-position: 120% 0, 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.08em; /* keep the italic's last stroke inside the clip */
+  animation: gold-sheen 2.6s cubic-bezier(0.22, 1, 0.36, 1) 1.5s 1 both;
+}
+@keyframes gold-sheen {
+  from { background-position: 120% 0, 0 0; }
+  to { background-position: -20% 0, 0 0; }
+}
+
 /* Wide display caps (Archivo's width axis). */
 .wide {
   font-family: var(--font-sans);
