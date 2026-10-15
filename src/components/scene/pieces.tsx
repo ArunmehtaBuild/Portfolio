@@ -37,16 +37,23 @@ export function useGold() {
 
 type PieceProps = { material: THREE.Material };
 
+// Modelled on Arun's reference: a two-step plinth, a rounded tier, a ring, a tapered stem,
+// a flat collar and a large polished ball.
+const PAWN: [number, number][] = [
+  [0, 0], [0.6, 0], [0.615, 0.02], [0.62, 0.06], [0.62, 0.17], [0.6, 0.21],
+  [0.53, 0.225], [0.555, 0.25], [0.56, 0.3], [0.54, 0.36], [0.5, 0.42], [0.45, 0.465],
+  [0.43, 0.48], [0.43, 0.59], [0.4, 0.615], [0.33, 0.63],
+  [0.3, 0.72], [0.26, 0.84], [0.225, 0.97], [0.205, 1.1], [0.2, 1.15],
+  [0.31, 1.16], [0.325, 1.18], [0.325, 1.27], [0.31, 1.29], [0.2, 1.3], [0.18, 1.33], [0, 1.34],
+];
+
 export function Pawn({ material }: PieceProps) {
-  const body = useMemo(
-    () => lathe([...BASE, [0.3, 0.62], [0.24, 0.98], [0.22, 1.12], [0.38, 1.18], [0.4, 1.24], [0.26, 1.3], [0, 1.32]]),
-    [],
-  );
+  const body = useMemo(() => lathe(PAWN), []);
   return (
     <group>
       <mesh geometry={body} material={material} castShadow receiveShadow />
-      <mesh position={[0, 1.6, 0]} material={material} castShadow>
-        <sphereGeometry args={[0.34, 48, 32]} />
+      <mesh position={[0, 1.62, 0]} material={material} castShadow>
+        <sphereGeometry args={[0.33, 64, 48]} />
       </mesh>
     </group>
   );
