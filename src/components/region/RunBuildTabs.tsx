@@ -11,7 +11,8 @@ interface Props {
 }
 
 // Nexera's two sides in one place: switch between running the company and building it.
-// The pill slides between tabs and the cards swap with a short stagger.
+// The pill slides between tabs and the cards swap with a short stagger. Cards flow into two
+// balanced columns, each card only as tall as its text.
 export function RunBuildTabs({ run, build }: Props) {
   const [tab, setTab] = useState<"run" | "build">("run");
   const id = useId();
@@ -49,7 +50,7 @@ export function RunBuildTabs({ run, build }: Props) {
         <AnimatePresence mode="wait" initial={false}>
           <motion.ol
             key={tab}
-            className="grid gap-3 md:grid-cols-2"
+            className="gap-3 md:columns-2"
             initial="hidden"
             animate="shown"
             exit="gone"
@@ -63,7 +64,7 @@ export function RunBuildTabs({ run, build }: Props) {
                   shown: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
                   gone: { opacity: 0, y: -12, transition: { duration: 0.18 } },
                 }}
-                className="group flex gap-5 rounded-2xl border border-line bg-card p-6 transition-colors hover:border-accent"
+                className="group mb-3 flex break-inside-avoid gap-5 rounded-2xl border border-line bg-card p-6 transition-colors hover:border-accent"
               >
                 <span className="font-mono text-[0.72rem] text-accent">{String(i + 1).padStart(2, "0")}</span>
                 <span>
