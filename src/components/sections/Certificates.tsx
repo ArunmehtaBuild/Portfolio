@@ -13,9 +13,8 @@ export function Certificates() {
   return (
     <section aria-labelledby="certificates-title" className="py-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <h2 id="certificates-title" className="flex items-baseline gap-4 border-t border-line pt-10">
-          <span className="label">Proof</span>
-          <span className="font-serif text-[1.9rem] leading-none italic">Certificates</span>
+        <h2 id="certificates-title" className="border-t border-line pt-10 font-serif text-[1.9rem] leading-none italic">
+          Gallery
         </h2>
       </div>
 
@@ -39,7 +38,7 @@ function CertificatePhoto({ certificate: c, copy }: { certificate: Certificate; 
     <li
       aria-hidden={copy || undefined}
       style={{ aspectRatio: `${c.width ?? 4} / ${c.height ?? 3}` }}
-      className="h-[12rem] shrink-0 sm:h-[15rem]"
+      className="h-[10.2rem] shrink-0 sm:h-[12.75rem]"
     >
       <a
         href={`/certificates/${c.image}`}
@@ -49,7 +48,7 @@ function CertificatePhoto({ certificate: c, copy }: { certificate: Certificate; 
         data-cursor="View"
         className="relative block size-full overflow-hidden rounded-2xl border border-line bg-card transition-transform hover:-translate-y-1"
       >
-        <Image src={`/certificates/${c.image}`} alt={`${c.title}: ${c.note}`} fill sizes="(min-width: 640px) 22rem, 16rem" className="object-cover" />
+        <Image src={`/certificates/${c.image}`} alt={`${c.title}: ${c.note}`} fill sizes="(min-width: 640px) 19rem, 14rem" className="object-cover" />
       </a>
     </li>
   );
