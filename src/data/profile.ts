@@ -18,7 +18,7 @@ export const profile = {
 };
 
 export const about = {
-  lead: "I’m Arun. I like getting to the core of a system: how it’s designed, where it breaks, and what holds it up.",
+  lead: "I’m Arun. I get to the core of how systems work, then build them.",
   paragraphs: [
     "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and I build parts of the platform myself.",
     "Beyond Nexera, I’ve worked on products across ocean science, cybersecurity, fintech and civic tech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, taking machine-learning models and serving them through APIs that hold up under real use.",
