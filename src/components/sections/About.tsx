@@ -15,6 +15,7 @@ export function About() {
           <p className="font-serif text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.12] text-fg [-webkit-text-stroke:0.022em_currentColor]">
             <SplitWords text={about.lead} stagger={0.025} />
           </p>
+          <p className="mt-4 font-serif text-[clamp(1.25rem,2vw,1.6rem)] leading-[1.3] text-fg/80">{about.leadNote}</p>
           <FadeUp delay={0.15} className="mt-8 space-y-5 text-[1.08rem] leading-[1.7] text-muted">
             {about.paragraphs.map((p) => (
               <p key={p}>{p}</p>

@@ -18,7 +18,9 @@ export const profile = {
 };
 
 export const about = {
-  lead: "I’m Arun. I take systems apart so I can build better ones.",
+  lead: "I’m Arun, I build things that matter.",
+  /** Second line of the About heading, set smaller under the lead. */
+  leadNote: "Exploring technology, building useful things, and always looking for what’s next.",
   paragraphs: [
     "At Nexera, a learning platform for GGSIPU students, I’m Director & COO. I keep launches and workflows moving, and build parts of the platform myself.",
     "Beyond Nexera, I’ve worked across ML, ocean science, cybersecurity and fintech. At Smart India Hackathon 2026 I built the backends for OKEANOS and NETWM, serving machine-learning models through APIs that hold up under real use.",
