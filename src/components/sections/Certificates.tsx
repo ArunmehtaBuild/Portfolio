@@ -8,7 +8,7 @@ export function Certificates() {
   if (shown.length === 0) return null;
   // Repeat short lists so one lap is wider than the screen, then render the lap twice so
   // the loop is seamless (the second copy is hidden from assistive tech).
-  const lap = Array.from({ length: Math.max(1, Math.ceil(8 / shown.length)) }, () => shown).flat();
+  const lap = Array.from({ length: Math.max(1, Math.ceil(6 / shown.length)) }, () => shown).flat();
 
   return (
     <section aria-labelledby="certificates-title" className="py-10">
@@ -35,16 +35,21 @@ export function Certificates() {
 
 function CertificatePhoto({ certificate: c, copy }: { certificate: Certificate; copy: boolean }) {
   return (
-    <li aria-hidden={copy || undefined} className="w-[17rem] shrink-0 sm:w-[20rem]">
+    // Every card is the same height; its width follows the photo, so nothing is cropped.
+    <li
+      aria-hidden={copy || undefined}
+      style={{ aspectRatio: `${c.width ?? 4} / ${c.height ?? 3}` }}
+      className="h-[12rem] shrink-0 sm:h-[15rem]"
+    >
       <a
         href={`/certificates/${c.image}`}
         target="_blank"
         rel="noreferrer"
         tabIndex={copy ? -1 : undefined}
         data-cursor="View"
-        className="relative block aspect-[4/3] overflow-hidden rounded-2xl border border-line bg-card transition-transform hover:-translate-y-1"
+        className="relative block size-full overflow-hidden rounded-2xl border border-line bg-card transition-transform hover:-translate-y-1"
       >
-        <Image src={`/certificates/${c.image}`} alt={`${c.title} certificate`} fill sizes="20rem" className="object-cover" />
+        <Image src={`/certificates/${c.image}`} alt={`${c.title}: ${c.note}`} fill sizes="(min-width: 640px) 22rem, 16rem" className="object-cover" />
       </a>
     </li>
   );
