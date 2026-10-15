@@ -176,6 +176,23 @@ body {
   .cert-track { animation: none; }
 }
 
+/* Typewriter caret: a solid block in the accent colour that blinks. */
+.typewriter-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 0.06em;
+  vertical-align: -0.1em;
+  background: var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-caret { animation: none; }
+}
+
 /* Wide display caps (Archivo's width axis). */
 .wide {
   font-family: var(--font-sans);
