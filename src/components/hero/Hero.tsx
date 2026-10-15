@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 
@@ -9,11 +8,12 @@ import { FadeUp, SplitWords } from "../motion/Reveal";
 // right half, and a single row under a hairline holds the line about the work, the buttons
 // and three quick facts. Nothing else, so the first screen stays calm.
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.6], [0, -90]);
-  const blur = useTransform(scrollYProgress, [0, 0.55], [0, 14]);
+  // Fade out by window scroll in pixels: the hero is always the top of the page, and a
+  // target-based progress could start part-way faded and wash the name out at rest.
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [40, 520], [1, 0]);
+  const y = useTransform(scrollY, [0, 560], [0, -90]);
+  const blur = useTransform(scrollY, [40, 520], [0, 14]);
   const filter = useMotionTemplate`blur(${blur}px)`;
 
   const links = [
@@ -28,7 +28,7 @@ export function Hero() {
   ];
 
   return (
-    <section ref={ref} id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
+    <section id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
       <motion.div style={{ opacity, y, filter }} className="mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-5 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-10">
         {/* The name, centred in the space above the bottom row */}
         <div className="flex flex-1 flex-col justify-center py-8">
