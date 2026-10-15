@@ -2,11 +2,11 @@
 
 import { useMemo } from "react";
 import * as THREE from "three";
-import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
+import { KNIGHT_BASE, KNIGHT_HEAD_SCALE, KNIGHT_HEAD_Y, knightHeadGeometry } from "./knight";
 
 // Gold chess pieces built in code: pawn, bishop and queen are lathe-turned profiles;
-// the knight is a lathe base with an extruded, bevelled horse-head silhouette.
-// Heights (in scene units): pawn ~1.9, knight ~2.2, bishop ~2.5, queen ~2.75.
+// the knight is a lathe base with a sculpted horse head (see knight.ts).
+// Heights (in scene units): pawn ~1.9, knight ~2.4, bishop ~2.5, queen ~2.75.
 
 const v = (pts: [number, number][]) => pts.map(([r, y]) => new THREE.Vector2(r, y));
 
@@ -127,62 +127,21 @@ export function Queen({ material }: PieceProps) {
   );
 }
 
-// The knight's head is one seamless surface: a chain of metaballs (chest, arched neck,
-// skull, face, muzzle, mane, ears) melted together with marching cubes, so polished gold
-// flows across it with no joins, like a cast piece. Computed once, not per frame. Faces +x.
-// Each ball is [x, y, z, radius] in the unit cube; strength is derived from the radius.
-const KNIGHT_BALLS: [number, number, number, number][] = [
-  // chest flaring into the base, then the neck, leaning forward as it rises
-  [0.47, 0.07, 0.5, 0.13],
-  [0.46, 0.14, 0.5, 0.115],
-  [0.47, 0.24, 0.5, 0.1],
-  [0.49, 0.34, 0.5, 0.09],
-  [0.51, 0.44, 0.5, 0.085],
-  [0.53, 0.53, 0.5, 0.085],
-  // skull and crown
-  [0.55, 0.63, 0.5, 0.105],
-  [0.53, 0.7, 0.5, 0.082],
-  // face running down to the muzzle
-  [0.62, 0.62, 0.5, 0.08],
-  [0.69, 0.58, 0.5, 0.07],
-  [0.75, 0.54, 0.5, 0.064],
-  [0.79, 0.51, 0.5, 0.058],
-  [0.62, 0.55, 0.5, 0.078],
-  // mane along the back of the neck
-  [0.4, 0.3, 0.5, 0.068],
-  [0.4, 0.4, 0.5, 0.068],
-  [0.42, 0.5, 0.5, 0.068],
-  [0.45, 0.6, 0.5, 0.066],
-  [0.48, 0.68, 0.5, 0.062],
-  // ears
-  [0.53, 0.79, 0.46, 0.036],
-  [0.53, 0.79, 0.54, 0.036],
-  [0.535, 0.83, 0.46, 0.024],
-  [0.535, 0.83, 0.54, 0.024],
-];
-const SUBTRACT = 12;
-
 export function Knight({ material }: PieceProps) {
-  const base = useMemo(() => lathe([...BASE, [0.38, 0.5], [0, 0.52]]), []);
-  const head = useMemo(() => {
-    const mc = new MarchingCubes(64, material, false, false, 60000);
-    mc.isolation = 80;
-    mc.reset();
-    for (const [x, y, z, r] of KNIGHT_BALLS) {
-      // Field is strength / d² − subtract; it crosses the isolation level at d = r.
-      mc.addBall(x, y, z, r * r * (mc.isolation + SUBTRACT), SUBTRACT);
-    }
-    // Smooth the field so the chain of balls reads as one even curve, not a row of bumps.
-    mc.blur(1);
-    mc.update();
-    mc.castShadow = true;
-    return mc;
-  }, [material]);
-
+  const base = useMemo(() => lathe(KNIGHT_BASE), []);
+  const head = useMemo(() => knightHeadGeometry(), []);
+  // Drawn a touch smaller so its foot matches the other pieces.
   return (
-    <group>
+    <group scale={0.85}>
       <mesh geometry={base} material={material} castShadow receiveShadow />
-      <primitive object={head} position={[-0.08, 1.37, 0]} scale={0.95} />
+      <mesh
+        geometry={head}
+        material={material}
+        position={[0, KNIGHT_HEAD_Y, 0]}
+        scale={KNIGHT_HEAD_SCALE}
+        castShadow
+        receiveShadow
+      />
     </group>
   );
 }
