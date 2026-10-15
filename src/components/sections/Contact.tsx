@@ -20,7 +20,8 @@ export function Contact() {
             <span className="block font-serif text-[clamp(2.2rem,5vw,4.2rem)] text-accent italic">
               <SplitWords text="Open to internships, collaborations" />
             </span>
-            <span className="wide mt-2 block text-[clamp(2.2rem,5.4vw,4.6rem)]">
+            {/* The sentence continues in the same serif, upright and in ink, so it reads as one line of thought. */}
+            <span className="mt-1 block font-serif text-[clamp(2.2rem,5vw,4.2rem)]">
               <SplitWords text="and real contributions." delay={0.15} />
             </span>
           </h2>
