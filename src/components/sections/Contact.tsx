@@ -21,7 +21,7 @@ export function Contact() {
               <SplitWords text="Open to internships, collaborations" />
             </span>
             <span className="wide mt-2 block text-[clamp(2.2rem,5.4vw,4.6rem)]">
-              <SplitWords text="and hard problems." delay={0.15} />
+              <SplitWords text="and real contributions." delay={0.15} />
             </span>
           </h2>
 
