@@ -5,9 +5,9 @@ import { useRef } from "react";
 import { profile } from "@/data/profile";
 import { FadeUp, SplitWords } from "../motion/Reveal";
 
-// Hero: the name is the subject. Kicker, name, one line about the work and the buttons sit
-// in a clean column on the left; a facts bar is pinned to the bottom edge; the 3D board
-// stays on the right behind a soft scrim so it never competes with the text.
+// Hero: one full screen, edge to edge. The name fills the upper left, the 3D board owns the
+// right half, and a single row under a hairline holds the line about the work, the buttons
+// and three quick facts. Nothing else, so the first screen stays calm.
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -22,71 +22,71 @@ export function Hero() {
     ...(profile.resumeHref ? [{ label: "Résumé", href: profile.resumeHref }] : []),
   ];
   const facts = [
-    { label: "Currently", value: "Director & COO @ Nexera" },
+    { label: "Currently", value: "Director & COO, Nexera" },
     { label: "Building", value: "OKEANOS · NETWM · SIH 2026" },
     { label: "Based in", value: profile.location },
   ];
 
   return (
     <section ref={ref} id="origin" data-stop="origin" aria-labelledby="origin-title" className="relative isolate overflow-hidden">
-      <motion.div style={{ opacity, y, filter }} className="mx-auto flex min-h-[100svh] max-w-7xl flex-col px-5 pt-32 sm:px-8 sm:pt-36">
-        {/* Main column, vertically centred in the space above the facts bar */}
-        <div className="flex flex-1 flex-col justify-center pb-10">
+      <motion.div style={{ opacity, y, filter }} className="mx-auto w-full max-w-[110rem] px-5 sm:px-10 lg:px-14 flex min-h-[100svh] flex-col pt-24 pb-8 sm:pt-28 sm:pb-10">
+        {/* The name, centred in the space above the bottom row */}
+        <div className="flex flex-1 flex-col justify-center py-8">
           <FadeUp immediate className="flex flex-wrap items-center gap-x-3 gap-y-2">
             {profile.tagline.map((part, i) => (
-              <span key={part} className="flex items-center gap-3 font-mono text-[0.74rem] tracking-[0.12em] text-muted uppercase">
+              <span key={part} className="flex items-center gap-3 font-mono text-[0.74rem] tracking-[0.14em] text-muted uppercase">
                 {i > 0 && <span aria-hidden="true" className="size-1 rounded-full bg-accent" />}
                 {part}
               </span>
             ))}
           </FadeUp>
 
-          <h1 id="origin-title" className="mt-7 leading-[0.84]">
-            <span className="block font-serif text-[clamp(4.6rem,13vw,10.5rem)] italic tracking-[-0.025em]">
+          <h1 id="origin-title" className="mt-6 leading-[0.82] sm:mt-8">
+            <span className="block font-serif text-[clamp(5rem,13.5vw,14rem)] italic tracking-[-0.03em]">
               <SplitWords text="Arun" immediate delay={0.2} />
             </span>
-            <span className="wide block text-[clamp(3.4rem,10vw,8.2rem)] text-accent">
+            <span className="wide block text-[clamp(3.6rem,10.8vw,11.5rem)] tracking-[-0.01em] text-accent">
               <SplitWords text="Mehta" immediate delay={0.4} />
             </span>
           </h1>
-
-          <FadeUp immediate delay={0.7} className="mt-9 max-w-[36rem]">
-            <p className="font-serif text-[clamp(1.5rem,2.3vw,1.95rem)] leading-[1.18]">{profile.headline}</p>
-            <p className="mt-3 max-w-[32rem] text-[1rem] leading-[1.65] text-muted">{profile.subline}</p>
-          </FadeUp>
-
-          <FadeUp immediate delay={0.85} className="mt-9 flex flex-wrap items-center gap-3">
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 font-mono text-[0.8rem] font-medium tracking-[0.06em] text-bg uppercase transition-transform hover:-translate-y-0.5"
-            >
-              See my work
-              <span aria-hidden="true" className="transition-transform group-hover:translate-y-0.5">↓</span>
-            </a>
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                {...(link.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="group inline-flex items-center gap-1.5 px-3 py-3 font-mono text-[0.76rem] tracking-[0.08em] text-muted uppercase transition-colors hover:text-fg"
-              >
-                {link.label}
-                <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
-              </a>
-            ))}
-          </FadeUp>
         </div>
 
-        {/* Facts bar pinned to the bottom edge */}
-        <FadeUp immediate delay={1} className="border-t border-line">
-          <dl className="grid grid-cols-1 gap-x-10 gap-y-4 py-6 sm:grid-cols-3 sm:py-7">
-            {facts.map((f) => (
-              <div key={f.label} className="flex items-baseline justify-between gap-4 sm:block">
-                <dt className="label">{f.label}</dt>
-                <dd className="text-[0.98rem] font-medium sm:mt-1.5">{f.value}</dd>
+        {/* One row under a hairline: the line about the work and the buttons, then the facts */}
+        <FadeUp immediate delay={0.75} className="border-t border-line pt-7 sm:pt-8">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="max-w-[34rem] font-serif text-[clamp(1.45rem,2.1vw,1.9rem)] leading-[1.15]">{profile.headline}</p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-3">
+                <a
+                  href="#projects"
+                  className="group mr-2 inline-flex items-center gap-3 rounded-full bg-fg px-6 py-3.5 font-mono text-[0.78rem] font-medium tracking-[0.08em] text-bg uppercase transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-accent"
+                >
+                  See my work
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-y-0.5">↓</span>
+                </a>
+                {links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    {...(link.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                    className="group inline-flex items-center gap-1.5 px-3 py-3 font-mono text-[0.74rem] tracking-[0.1em] text-muted uppercase transition-colors hover:text-fg"
+                  >
+                    {link.label}
+                    <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+                  </a>
+                ))}
               </div>
-            ))}
-          </dl>
+            </div>
+
+            <dl className="grid grid-cols-1 gap-y-3 sm:grid-cols-[repeat(3,auto)] sm:justify-between sm:gap-x-10 lg:justify-end lg:gap-x-14 lg:text-right">
+              {facts.map((f) => (
+                <div key={f.label} className="flex items-baseline justify-between gap-4 sm:block">
+                  <dt className="label">{f.label}</dt>
+                  <dd className="text-[0.95rem] leading-snug font-medium sm:mt-2 sm:text-[1rem] sm:whitespace-nowrap">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </FadeUp>
       </motion.div>
     </section>

@@ -20,7 +20,7 @@ export function SiteHeader() {
         scrolled ? "border-b border-line bg-bg/75 backdrop-blur-md" : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+      <div className="mx-auto w-full max-w-[110rem] px-5 sm:px-10 lg:px-14 flex h-16 items-center justify-between gap-4">
         <Logo />
 
         <nav aria-label="Sections" className="hidden items-center gap-1 lg:flex">
